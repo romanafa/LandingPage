@@ -23,8 +23,8 @@ namespace LandingPage.API.Controllers
         public GroupsController(AthenaPayLandingPageDbContext context, IMapper mapper, ILogger<GroupsController> logger)
         {
             _context = context;
-            this.mapper=mapper;
-            this.logger=logger;
+            this.mapper = mapper;
+            this.logger = logger;
         }
 
         // GET: api/Groups
@@ -33,6 +33,7 @@ namespace LandingPage.API.Controllers
         {
             if (_context.Groups == null)
             {
+                logger.LogWarning($"Data not found in {nameof(GetGroups)}");
                 return NotFound();
             }
 
@@ -56,6 +57,7 @@ namespace LandingPage.API.Controllers
         {
             if (_context.Groups == null)
             {
+                logger.LogWarning($"Data not found in {nameof(GetGroup)}");
                 return NotFound();
             }
 
@@ -110,6 +112,7 @@ namespace LandingPage.API.Controllers
             {
                 if (!GroupExists(id))
                 {
+                    logger.LogWarning($"Data not found in {nameof(PutGroup)}");
                     return NotFound();
                 }
                 else
