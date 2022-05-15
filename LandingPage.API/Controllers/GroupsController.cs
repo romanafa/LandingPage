@@ -9,11 +9,13 @@ using LandingPage.API.Data;
 using LandingPage.API.Models.Group;
 using AutoMapper;
 using LandingPage.API.Static;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LandingPage.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class GroupsController : ControllerBase
     {
         private readonly AthenaPayLandingPageDbContext _context;
@@ -39,7 +41,9 @@ namespace LandingPage.API.Controllers
 
             try
             {
-                var groups = await _context.Groups.ToListAsync();
+                var groups = await _context.Groups
+                    .Include(q => q.Users)
+                    .ToListAsync();
                 var groupDtos = mapper.Map<IEnumerable<GroupReadOnlyDto>>(groups);
                 return Ok(groupDtos);
             }
@@ -63,7 +67,9 @@ namespace LandingPage.API.Controllers
 
             try
             {
-                var group = await _context.Groups.FindAsync(id);
+                var group = await _context.Groups
+                    .Include(q => q.Users)
+                    .FirstOrDefaultAsync(q => q.GroupId == id);
 
                 if (group == null)
                 {

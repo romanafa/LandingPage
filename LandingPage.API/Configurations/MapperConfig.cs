@@ -2,6 +2,7 @@
 using LandingPage.API.Data;
 using LandingPage.API.Models.Group;
 using LandingPage.API.Models.Tenant;
+using LandingPage.API.Models.User;
 
 namespace LandingPage.API.Configurations
 {
@@ -16,7 +17,10 @@ namespace LandingPage.API.Configurations
             CreateMap<TenantCreateDto, Tenant>().ReverseMap();
             CreateMap<TenantUpdateDto, Tenant>().ReverseMap();
             CreateMap<TenantReadOnlyDto, Tenant>().ReverseMap();
-          
+
+            CreateMap<ApplicationUser, UserDto>().ReverseMap();
+            CreateMap<UserReadOnlyDto, ApplicationUser>().ReverseMap();
+
         }
     }
 }

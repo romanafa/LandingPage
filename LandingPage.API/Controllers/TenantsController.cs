@@ -9,11 +9,13 @@ using LandingPage.API.Data;
 using AutoMapper;
 using LandingPage.API.Models.Tenant;
 using LandingPage.API.Static;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LandingPage.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TenantsController : ControllerBase
     {
         private readonly AthenaPayLandingPageDbContext _context;
@@ -85,6 +87,7 @@ namespace LandingPage.API.Controllers
         // PUT: api/Tenants/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PutTenant(int id, TenantUpdateDto tenantDto)
         {
             if (id != tenantDto.TenantId)
