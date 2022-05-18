@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace LandingPage.API.Data
 {
-    public partial class AthenaPayLandingPageDbContext : IdentityDbContext<ApplicationUser>
+    public partial class AthenaPayLandingPageDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         public AthenaPayLandingPageDbContext()
         {
@@ -25,7 +25,20 @@ namespace LandingPage.API.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            OnModelCreatingPartial(modelBuilder);
+            modelBuilder.Entity<ApplicationUserRole>(userRole =>
+            {
+                userRole.HasKey(ur => new { ur.UserId, ur.RoleId });
+
+                userRole.HasOne(ur => ur.Role)
+                    .WithMany(r => r.UserRoles)
+                    .HasForeignKey(ur => ur.RoleId)
+                    .IsRequired();
+
+                userRole.HasOne(ur => ur.User)
+                    .WithMany(r => r.UserRoles)
+                    .HasForeignKey(ur => ur.UserId)
+                    .IsRequired();
+            });
 
             modelBuilder.Entity<Group>(entity =>
             {
@@ -123,7 +136,5 @@ namespace LandingPage.API.Data
                 }
                 );
         }
-
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

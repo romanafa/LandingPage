@@ -34,7 +34,7 @@ namespace LandingPage.API.Controllers
 
         [HttpPost]
         [Route("register")]
-        public async Task<IActionResult> Register(UserDto userDto)
+        public async Task<IActionResult> Register(UserCreateDto userDto)
         {
             try
             {

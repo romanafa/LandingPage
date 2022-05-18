@@ -18,8 +18,10 @@ namespace LandingPage.API.Configurations
             CreateMap<TenantUpdateDto, Tenant>().ReverseMap();
             CreateMap<TenantReadOnlyDto, Tenant>().ReverseMap();
 
-            CreateMap<ApplicationUser, UserDto>().ReverseMap();
+            CreateMap<ApplicationUser, UserCreateDto>().ReverseMap();
+            CreateMap<ApplicationUser, LoginUserDto>().ReverseMap();
             CreateMap<UserReadOnlyDto, ApplicationUser>().ReverseMap();
+            CreateMap<UserUpdateDto, ApplicationUser>().ReverseMap();
 
         }
     }

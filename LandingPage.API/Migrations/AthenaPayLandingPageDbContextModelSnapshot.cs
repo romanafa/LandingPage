@@ -177,7 +177,7 @@ namespace LandingPage.API.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("Groups");
+                    b.ToTable("Groups", (string)null);
                 });
 
             modelBuilder.Entity("LandingPage.API.Data.Tenant", b =>
@@ -206,7 +206,7 @@ namespace LandingPage.API.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("Tenants");
+                    b.ToTable("Tenants", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

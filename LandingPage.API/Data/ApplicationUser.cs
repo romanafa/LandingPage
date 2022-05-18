@@ -8,5 +8,6 @@ namespace LandingPage.API.Data
         public string? LastName { get; set; }
         public bool? IsActive { get; set; } = true;
         public virtual ICollection<Group>? Groups { get; set; }
+        public ICollection<ApplicationUserRole> UserRoles { get; set; }
     }
 }
