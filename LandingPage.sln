@@ -5,7 +5,7 @@ VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandingPage.API", "LandingPage.API\LandingPage.API.csproj", "{BAB461DB-04A3-4681-BEE0-09B41BC4715E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LandingPage.Server", "LandingPage.Server\LandingPage.Server.csproj", "{D1930405-3E84-407F-9A30-49A9A1D961EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandingPage.Server", "LandingPage.Server\LandingPage.Server.csproj", "{D1930405-3E84-407F-9A30-49A9A1D961EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

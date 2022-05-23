@@ -1,44 +1,77 @@
 ﻿@page "/users/register"
+@inject IClient _httpClient
+@inject NavigationManager _navManager
 
-<h3>Register</h3>
+<h3>Registrer ny bruker</h3>
 
-@*<div>
+@if(string.IsNullOrEmpty(message) == false)
+{
+    <div class="alert alert-danger">
+        <p>@message</p>
+    </div>
+}
+
+<div class="row d-flex align-items-center justify-content-center p-5">
+    <div class="col-md-4">
     <EditForm Model="RegistrationModel" OnValidSubmit="HandleRegistration">
         <DataAnnotationsValidator />
         <ValidationSummary />
         <div class="form-group">
-            <label for="email">Email Address</label>
+            <label for="email">E-post</label>
             <InputText class="form-control" @bind-Value="RegistrationModel.Email" />
             <ValidationMessage For="@(() => RegistrationModel.Email)" />
         </div>
         <br/>
         <div class="form-group">
-            <label for="email">First Name</label>
+            <label for="email">Fornavn</label>
             <InputText class="form-control" @bind-Value="RegistrationModel.FirstName" />
             <ValidationMessage For="@(() => RegistrationModel.FirstName)" />
         </div>
         <br/>
         <div class="form-group">
-            <label for="email">Last Name</label>
+            <label for="email">Etternavn</label>
             <InputText class="form-control" @bind-Value="RegistrationModel.LastName" />
             <ValidationMessage For="@(() => RegistrationModel.LastName)" />
         </div>
         <br/>
         <div class="form-group">
-            <label for="email">Password</label>
+            <label for="email">Passord</label>
             <InputText class="form-control" type="password" @bind-Value="RegistrationModel.Password" />
             <ValidationMessage For="@(() => RegistrationModel.Password)" />
         </div>
         <br/>
-        <button type="submit" class="btn btn-primary btn-block">Register</button>
-
-        
+        <button type="submit" class="btn btn-primary btn-block">Register</button>    
     </EditForm>
-</div>*@
+</div>
+</div>
 
 @code {
     UserCreateDto RegistrationModel = new UserCreateDto
-    {
-        //Role = "Merchant"
+        {
+            Role = "NewTenant"
     };
+
+    string message = string.Empty;
+    private async Task HandleRegistration()
+    {
+        
+        try
+        {
+            await _httpClient.RegisterAsync(RegistrationModel);
+            NavigateToLogin();
+        } 
+        catch(ApiException ex)
+        {
+            if(ex.StatusCode >= 200 && ex.StatusCode <= 299)
+            {
+                NavigateToLogin();
+            }
+
+            message = ex.Response;
+        }   
+    }
+
+    private void NavigateToLogin(){
+        _navManager.NavigateTo("/users/login");
+    }
 }

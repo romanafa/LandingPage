@@ -178,13 +178,11 @@ namespace LandingPage.Server.Services.Base
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.16.0.0 (NJsonSchema v10.7.1.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class Client : IClient
     {
-        private string _baseUrl = "";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings;
 
-        public Client(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public Client(System.Net.Http.HttpClient httpClient)
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             _settings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(CreateSerializerSettings);
         }
@@ -194,12 +192,6 @@ namespace LandingPage.Server.Services.Base
             var settings = new Newtonsoft.Json.JsonSerializerSettings();
             UpdateJsonSerializerSettings(settings);
             return settings;
-        }
-
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
         }
 
         protected Newtonsoft.Json.JsonSerializerSettings JsonSerializerSettings { get { return _settings.Value; } }
@@ -223,7 +215,7 @@ namespace LandingPage.Server.Services.Base
         public virtual async System.Threading.Tasks.Task RegisterAsync(UserCreateDto body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Authentication/register");
+            urlBuilder_.Append("api/Authentication/register");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -294,7 +286,7 @@ namespace LandingPage.Server.Services.Base
         public virtual async System.Threading.Tasks.Task<AuthenticationResponse> LoginAsync(LoginUserDto body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Authentication/login");
+            urlBuilder_.Append("api/Authentication/login");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -371,7 +363,7 @@ namespace LandingPage.Server.Services.Base
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<GroupReadOnlyDto>> GroupsAllAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Groups");
+            urlBuilder_.Append("api/Groups");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -445,7 +437,7 @@ namespace LandingPage.Server.Services.Base
         public virtual async System.Threading.Tasks.Task<GroupCreateDto> GroupsPOSTAsync(GroupCreateDto body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Groups");
+            urlBuilder_.Append("api/Groups");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -525,7 +517,7 @@ namespace LandingPage.Server.Services.Base
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Groups/{id}");
+            urlBuilder_.Append("api/Groups/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -603,7 +595,7 @@ namespace LandingPage.Server.Services.Base
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Groups/{id}");
+            urlBuilder_.Append("api/Groups/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -678,7 +670,7 @@ namespace LandingPage.Server.Services.Base
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Groups/{id}");
+            urlBuilder_.Append("api/Groups/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -747,7 +739,7 @@ namespace LandingPage.Server.Services.Base
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<TenantReadOnlyDto>> TenantsAllAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Tenants");
+            urlBuilder_.Append("api/Tenants");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -821,7 +813,7 @@ namespace LandingPage.Server.Services.Base
         public virtual async System.Threading.Tasks.Task<Tenant> TenantsPOSTAsync(TenantCreateDto body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Tenants");
+            urlBuilder_.Append("api/Tenants");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -901,7 +893,7 @@ namespace LandingPage.Server.Services.Base
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Tenants/{id}");
+            urlBuilder_.Append("api/Tenants/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -979,7 +971,7 @@ namespace LandingPage.Server.Services.Base
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Tenants/{id}");
+            urlBuilder_.Append("api/Tenants/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -1054,7 +1046,7 @@ namespace LandingPage.Server.Services.Base
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Tenants/{id}");
+            urlBuilder_.Append("api/Tenants/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -1123,7 +1115,7 @@ namespace LandingPage.Server.Services.Base
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<UserReadOnlyDto>> UsersAllAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Users");
+            urlBuilder_.Append("api/Users");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1197,7 +1189,7 @@ namespace LandingPage.Server.Services.Base
         public virtual async System.Threading.Tasks.Task<UserCreateDto> UsersPOSTAsync(UserCreateDto body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Users");
+            urlBuilder_.Append("api/Users");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1277,7 +1269,7 @@ namespace LandingPage.Server.Services.Base
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Users/{id}");
+            urlBuilder_.Append("api/Users/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -1355,7 +1347,7 @@ namespace LandingPage.Server.Services.Base
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Users/{id}");
+            urlBuilder_.Append("api/Users/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -1430,7 +1422,7 @@ namespace LandingPage.Server.Services.Base
                 throw new System.ArgumentNullException("id");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Users/{id}");
+            urlBuilder_.Append("api/Users/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;
@@ -1858,6 +1850,9 @@ namespace LandingPage.Server.Services.Base
         [Newtonsoft.Json.JsonProperty("lastName", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public string LastName { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("role", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Role { get; set; }
 
     }
 

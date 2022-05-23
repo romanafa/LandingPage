@@ -1,19 +1,17 @@
 ﻿@inherits LayoutComponentBase
 
-<PageTitle>LandingPage.Server</PageTitle>
-
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
+<body>
+    <NavMenu />
     <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
-
-        <article class="content px-4">
+        <article class="content">
             @Body
         </article>
     </main>
-</div>
+    
+</body>
+
+<footer class="footer text-white text-sm-start fixed-bottom bg-primary">
+    <div class="container mt-3 mb-3">
+        &copy; 2022 - Athena.Pay.LandingPage
+    </div>
+</footer>

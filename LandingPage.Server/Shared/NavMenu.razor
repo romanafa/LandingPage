@@ -1,4 +1,4 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@*<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">LandingPage.Server</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -25,15 +25,57 @@
             </NavLink>
         </div>
     </nav>
-</div>
+</div>*@
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow fixed-top mb-1 justify-content-between d-flex">
+    <a class="navbar-brand text-light mx-3" href="">Athena.Pay</a>
+        <button class="navbar-toggler" @onclick="ToggleNavMenu" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+@*        <AuthorizeView Roles="Admin">*@
+        <div class="@NavMenuCssClass navbar-collapse" id="navbar_hover" @onclick="CollapseNavMenu">
+            <ul class="navbar-nav nav mx-3"> 
+                <li>
+                    <a class="nav-link text-light" href="group">Grupper</a>
+                </li>
+                <li>
+                    <a class="nav-link text-light" href="tenant">Tenants</a>
+                </li>
+                
+                <li>
+                    <a class="nav-link text-light" href="user">Brukere</a>
+                </li>
+                <li>
+                    <a class="nav-link text-light" href="users/register">Registrer</a>
+                </li>
+            </ul>   
+        </div>
+@*        </AuthorizeView>
+
+        <AuthorizeView Roles="Merchant">
+        </AuthorizeView>
+         *@
+         <div class="mx-3">
+              <LoginDisplay></LoginDisplay>
+         </div>
+ 
+</nav>
+
 
 @code {
-    private bool collapseNavMenu = true;
+    bool collapseNavMenu = true;
 
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-    private void ToggleNavMenu()
+    void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
     }
+
+    void CollapseNavMenu()
+    {
+        collapseNavMenu = true;
+    }
 }
+
