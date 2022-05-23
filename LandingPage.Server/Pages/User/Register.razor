@@ -2,7 +2,7 @@
 @inject IClient _httpClient
 @inject NavigationManager _navManager
 
-<h3>Registrer ny bruker</h3>
+
 
 @if(string.IsNullOrEmpty(message) == false)
 {
@@ -11,8 +11,9 @@
     </div>
 }
 
-<div class="row d-flex align-items-center justify-content-center p-5">
+<div class="row d-flex align-items-center justify-content-center">
     <div class="col-md-4">
+        <h3 class="p-1">Registrer ny bruker</h3>
     <EditForm Model="RegistrationModel" OnValidSubmit="HandleRegistration">
         <DataAnnotationsValidator />
         <ValidationSummary />
@@ -54,7 +55,7 @@
     string message = string.Empty;
     private async Task HandleRegistration()
     {
-        
+
         try
         {
             await _httpClient.RegisterAsync(RegistrationModel);

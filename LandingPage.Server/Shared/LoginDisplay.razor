@@ -1,9 +1,9 @@
 ﻿@inject IJSRuntime _jsRuntime
 
-@*<AuthorizeView>
-    <Authorized> *@ 
+<AuthorizeView>
+    <Authorized> 
         <div class="btn-group">
-          <button type="button" class="btn  btn-primary disabled">Velkommen,@* @context.User.Identity.Name*@</button>
+          <button type="button" class="btn  btn-primary disabled">Velkommen, @context.User?.Identity?.Name</button>
           <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" @onclick="()=>DropdownToggle()" aria-haspopup="true" aria-expanded="false">
             <span class="sr-only"></span>
           </button>
@@ -11,15 +11,16 @@
             <a class="dropdown-item" href="@($"/profile")"><i class="bi bi-person"></i>  Min profil</a>
               <a class="dropdown-item" href="settings"><i class="bi bi-gear"></i>  Innstillinger</a>
               <div class="dropdo wn-divider"></div>
-              <a class="dropdown-item" href="Identity/Account/Logout"><i class="bi bi-box-arrow-right"></i>  Logg ut</a>
+              <a class="dropdown-item" href="users/logout"><i class="bi bi-box-arrow-right"></i>  Logg ut</a>
           </div>
         </div>  
-    @*</Authorized>
-    <NotAuthorized>*@
-        <a href="Identity/Account/Login" class="text-white text-decoration-none">Logg inn  <i class="bi bi-box-arrow-in-right"></i></a>
-@*    </NotAuthorized>
+    </Authorized>
+    <NotAuthorized>
+        <a href="users/login" class="text-white text-decoration-none">Logg inn  <i class="bi bi-box-arrow-in-right"></i></a>
+       @* <a class="text-white text-decoration-none" href="users/register">Registrer</a>*@
+    </NotAuthorized>
 </AuthorizeView>
-*@
+
 
 @code {
     public int Id;
