@@ -27,6 +27,31 @@ namespace LandingPage.API.Controllers
             this.logger = logger;
         }
 
+        // GET: api/<UsersController>
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<UserReadOnlyDto>>> GetUsers()
+        {
+            if (_context.Users == null)
+            {
+                logger.LogWarning($"Data not found in {nameof(GetUsers)}");
+                return NotFound();
+            }
+
+            try
+            {
+                var users = await _context.Users.ToListAsync();
+                var userDtos = mapper.Map<IEnumerable<UserReadOnlyDto>>(users);
+                return Ok(userDtos);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, $"Error: GET in {nameof(GetUsers)}");
+                return StatusCode(500, Messages.Error500Message);
+            }
+
+
+        }
+
         //// GET: api/<UsersController>
         //[HttpGet]
         //public async Task<ActionResult<IEnumerable<UserReadOnlyDto>>> GetUsers()
@@ -70,7 +95,7 @@ namespace LandingPage.API.Controllers
         //        return StatusCode(500, Messages.Error500Message);
         //    }
 
-            
+
         //}
 
         // GET api/<UsersController>/5

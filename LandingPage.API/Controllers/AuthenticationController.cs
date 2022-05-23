@@ -50,7 +50,7 @@ namespace LandingPage.API.Controllers
                     }
                     return BadRequest(ModelState);
                 }
-                //await userManager.AddToRoleAsync(user, "Merchant");
+                await userManager.AddToRoleAsync(user, "NewTenant");
                 return Accepted();
             }
             catch (Exception ex)

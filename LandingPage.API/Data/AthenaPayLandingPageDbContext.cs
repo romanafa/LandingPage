@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace LandingPage.API.Data
 {
-    public partial class AthenaPayLandingPageDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
+    public partial class AthenaPayLandingPageDbContext : IdentityDbContext<ApplicationUser>
     {
         public AthenaPayLandingPageDbContext()
         {
@@ -25,20 +25,20 @@ namespace LandingPage.API.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<ApplicationUserRole>(userRole =>
-            {
-                userRole.HasKey(ur => new { ur.UserId, ur.RoleId });
+            //modelBuilder.Entity<ApplicationUserRole>(userRole =>
+            //{
+            //    userRole.HasKey(ur => new { ur.UserId, ur.RoleId });
 
-                userRole.HasOne(ur => ur.Role)
-                    .WithMany(r => r.UserRoles)
-                    .HasForeignKey(ur => ur.RoleId)
-                    .IsRequired();
+            //    userRole.HasOne(ur => ur.Role)
+            //        .WithMany(r => r.UserRoles)
+            //        .HasForeignKey(ur => ur.RoleId)
+            //        .IsRequired();
 
-                userRole.HasOne(ur => ur.User)
-                    .WithMany(r => r.UserRoles)
-                    .HasForeignKey(ur => ur.UserId)
-                    .IsRequired();
-            });
+            //    userRole.HasOne(ur => ur.User)
+            //        .WithMany(r => r.UserRoles)
+            //        .HasForeignKey(ur => ur.UserId)
+            //        .IsRequired();
+            //});
 
             modelBuilder.Entity<Group>(entity =>
             {
@@ -74,6 +74,12 @@ namespace LandingPage.API.Data
                     Name = "Tenant",
                     NormalizedName = "TENANT",
                     Id = "ebef473b-b328-426b-b5b7-40008974384c"
+                },
+                new IdentityRole
+                {
+                    Name = "NewTenant",
+                    NormalizedName = "NEWTENANT",
+                    Id = "9e229e60-a76b-4088-a262-bfa9d8e1a6cd"
                 }
                 );
 
@@ -135,6 +141,54 @@ namespace LandingPage.API.Data
                     UserId = "e20119f7-b5cb-43b3-8183-3f814334b160"
                 }
                 );
+
+            modelBuilder.Entity<Tenant>().HasData(
+                new Tenant
+                {
+                    TenantName = "Tenant1",
+                    Url = "tenant1url.no/activate",
+                    IsActive = true,
+                    TenantId = 1,
+                    GroupId = 1
+                },
+                new Tenant
+                {
+                    TenantName = "Tenant2",
+                    Url = "tenant2url.no/activate",
+                    IsActive = true,
+                    TenantId = 2,
+                    GroupId = 1
+                },
+                new Tenant
+                {
+                    TenantName = "Tenant3",
+                    Url = "tenant3url.no/activate",
+                    IsActive = true,
+                    TenantId = 3,
+                    GroupId = 2
+                }
+             );
+
+            modelBuilder.Entity<Group>().HasData(
+                new Group
+                {
+                    GroupName = "Group1",
+                    IsActiveGroup = true,
+                    GroupId = 1
+                },
+                new Group
+                {
+                    GroupName = "Group2",
+                    IsActiveGroup = true,
+                    GroupId = 2
+                },
+                new Group
+                {
+                    GroupName = "Group3",
+                    IsActiveGroup = true,
+                    GroupId = 3
+                }
+             );
         }
     }
 }
