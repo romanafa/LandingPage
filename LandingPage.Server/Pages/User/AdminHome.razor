@@ -1,0 +1,70 @@
+﻿@inject IJSRuntime _jsRuntime
+@inject IGroupService _groupService
+@attribute [Authorize(Roles = "Admin")]
+
+<_AddGroup IsProcessing="IsLoading"></_AddGroup>
+<_AddUser IsProcessing="IsLoading"></_AddUser>
+<_AddTenant IsProcessing="IsLoading" Groups="Groups"></_AddTenant>
+
+<div class="row align-content-center">
+    <div class="col-3 p-2 m-5 list-group">
+        <div class="list-group-item btn-group">
+            <div class="input-group">
+                <button type="button" class="btn btn-primary">
+                    <i class="bi bi-search"></i>
+                </button>
+              <input type="search" id="searchUser" class="form-control" placeholder="Søk bruker"/>  
+            </div>
+        </div>
+        <a href="users" class="list-group-item list-group-item-action"><i class="bi bi-list"></i><span class="mx-3">Vis alle brukere</span></a>
+        <button @onclick="()=>OpenUserModal()" class="list-group-item list-group-item-action"><i class="bi bi-plus-circle"></i><span class="mx-3">Legg til bruker</span></button>
+    </div>
+
+    <div class="col-3 p-2 m-5 list-group">
+        <div class="list-group-item btn-group">
+            <div class="input-group">
+                <button type="button" class="btn btn-primary">
+                    <i class="bi bi-search"></i>
+                </button>
+                <input type="search" id="searchGroup" class="form-control" placeholder="Søk gruppe"/>
+            </div>
+        </div>
+        <a href="groups" class="list-group-item list-group-item-action"><i class="bi bi-list"></i><span class="mx-3">Vis alle grupper</span></a>
+        <button @onclick="()=>OpenGroupModal()" class="list-group-item list-group-item-action"><i class="bi bi-plus-circle"></i><span class="mx-3">Legg til gruppe</span></button>
+    </div>
+
+    <div class="col-3 p-2 m-5 list-group">
+        <div class="list-group-item btn-group">
+            <div class="input-group">
+                <button type="button" class="btn btn-primary">
+                    <i class="bi bi-search"></i>
+                </button>
+                <input type="search" id="searchTenant" class="form-control" placeholder="Søk tenant"/>
+            </div>
+        </div>
+        <a href="tenants" class="list-group-item list-group-item-action"><i class="bi bi-list"></i><span class="mx-3">Vis alle tenants</span></a>
+        <button @onclick="()=>OpenTenantModal()" class="list-group-item list-group-item-action"><i class="bi bi-plus-circle"></i><span class="mx-3">Legg til tenant</span></button>
+    </div>
+</div>
+
+@code {
+    public bool IsLoading { get; set; }
+    private IEnumerable<GroupReadOnlyDto> Groups { get; set; } = new List<GroupReadOnlyDto>();
+
+    private void OpenGroupModal()
+    {
+        _jsRuntime.InvokeVoidAsync("ShowAddGroupModal");
+    }
+
+    private async void OpenTenantModal()
+    {
+       // Groups = await _groupService.GetGroups();
+        await _jsRuntime.InvokeVoidAsync("ShowAddTenantModal");
+    }
+
+    private void OpenUserModal()
+    {
+        _jsRuntime.InvokeVoidAsync("ShowAddUserModal");
+    }
+}
+
