@@ -1,0 +1,86 @@
+﻿@page "/groups/details/{id:int}"
+@inject IGroupService _groupService
+@inject NavigationManager _navManager
+
+<div class="row my-2 mx-4">
+    <h3 class="card-title text-primary mb-3 ml-3">Gruppe</h3>
+
+    <div class="col-3">
+        @if(IsLoading)
+        {
+            <div class="spinner"></div>
+        }
+        else
+        {
+            <EditForm Model="Group">
+                <fieldset disabled>
+                    <div class="form-group">
+                        <label>Gruppenavn</label>
+                        <InputText @bind-Value="Group.GroupName" class="form-control"></InputText>
+                        <label class="form-check-label">Gruppe er aktiv</label>
+                        <input type="checkbox" disabled checked="@Group.IsActiveGroup">
+                    </div>
+                </fieldset> 
+                @if(Group.Tenants == null || Group.Tenants.Any() == false)
+                {
+
+                     <p>Ingen tenants tildelt.</p>
+                }
+                else
+                {
+                    <div class="row">
+                        @foreach(var tenant in Group.Tenants)
+                        {
+                            <div class="col-3">
+                                <div class="card" style="width: 18rem;">
+                                  <div class="card-body">
+                                    <h5 class="card-title">@tenant.Tenant.TenantName</h5>
+                                    <p class="card-text"></p>
+                                    @*<a href="/tenants/details/@tenant.TenantId" class="btn btn-primary">Vis tenant</a>*@
+                                  </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                <br/>
+                <button @onclick="GoToEdit" class="btn btn-primary">
+                    <i class="bi bi-pencil-square"></i>
+                    Rediger
+                </button>
+
+                <button @onclick="BackToList" class="btn btn-outline-secondary">
+                    Tilbake til alle grupper
+                </button>
+            </EditForm>
+
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    private GroupReadOnlyDto Group = new GroupReadOnlyDto();
+    public bool IsLoading { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        var response = await _groupService.Get(Id);
+        if (response.Success)
+        {
+            Group = response.Data;
+        }
+    }
+
+    private void BackToList()
+    {
+        _navManager.NavigateTo("/groups");
+    }
+
+    private void GoToEdit()
+    {
+        _navManager.NavigateTo($"/groups/edit/{Group.GroupId}");
+    }
+
+}

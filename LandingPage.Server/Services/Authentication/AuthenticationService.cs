@@ -11,7 +11,7 @@ namespace LandingPage.Server.Services.Authentication
         private readonly ILocalStorageService localStorage;
         private readonly AuthenticationStateProvider authenticationStateProvider;
 
-        public AuthenticationService(IClient httpClient, ILocalStorageService localStorage, AuthenticationStateProvider authenticationStateProvider)
+        public AuthenticationService(IClient httpClient, ILocalStorageService localStorage, AuthenticationStateProvider authenticationStateProvider) : base(httpClient, localStorage)
         {
             this.httpClient = httpClient;
             this.localStorage = localStorage;

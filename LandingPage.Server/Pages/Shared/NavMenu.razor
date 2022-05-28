@@ -5,23 +5,23 @@
                 aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-@*        <AuthorizeView Roles="Admin">*@
+        <AuthorizeView Roles="Admin">
         <div class="@NavMenuCssClass navbar-collapse" id="navbar_hover" @onclick="CollapseNavMenu">
-            <ul class="navbar-nav nav mx-3"> 
+            <ul class="navbar-nav nav mx-4"> 
                 <li>
-                    <a class="nav-link text-light" href="group">Grupper</a>
+                    <a class="nav-link text-light" href="groups"><i class="bi bi-collection-fill"></i> Grupper</a>
                 </li>
                 <li>
-                    <a class="nav-link text-light" href="tenant">Tenants</a>
+                    <a class="nav-link text-light" href="tenants"><i class="bi bi-person-lines-fill"></i> Tenants</a>
                 </li>
                 
                 <li>
-                    <a class="nav-link text-light" href="user">Brukere</a>
+                    <a class="nav-link text-light" href="users"><i class="bi bi-people-fill"></i> Brukere</a>
                 </li>
             </ul>   
         </div>
-@*        </AuthorizeView>
-
+        </AuthorizeView>
+        @*
         <AuthorizeView Roles="Merchant">
         </AuthorizeView>
          *@

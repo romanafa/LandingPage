@@ -1,0 +1,53 @@
+﻿<div class="modal fade" data-backdrop="static" data-keyboard="false" id="deleteConfirmationModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog  modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Slett</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" @onclick="()=>OnConfirmDelete(false)">
+                    <span aria-hidden="true">🗙</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Er du sikker på at du vil slette dette?
+            </div>
+            @if (IsProcessing)
+            {
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" disabled">
+                        Avbryt
+                    </button>
+                    <button type="button" class="btn btn-danger" disabled">
+                        Sletter...
+                    </button>
+                </div>
+            }
+            else
+            {    
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="()=>OnConfirmDelete(false)">
+                        Avbryt
+                    </button>
+                    <button type="button" class="btn btn-danger" @onclick="()=>OnConfirmDelete(true)">
+                        Slett
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public bool IsProcessing { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> IsConfirmed { get; set; }
+
+    private async Task OnConfirmDelete(bool isConfirm)
+    {
+        if (isConfirm)
+        {
+            await IsConfirmed.InvokeAsync(isConfirm);
+        }
+    }
+}

@@ -1,10 +1,10 @@
 using Blazored.LocalStorage;
+using LandingPage.Server.Configurations;
 using LandingPage.Server.Providers;
+using LandingPage.Server.Services;
 using LandingPage.Server.Services.Authentication;
 using LandingPage.Server.Services.Base;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +15,10 @@ builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddHttpClient<IClient, Client>(cl => cl.BaseAddress = new Uri("https://localhost:7276"));
 
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IGroupService, GroupService>();
+builder.Services.AddScoped<ITenantService, TenantService>();
+
+builder.Services.AddAutoMapper(typeof(MapperConfig));
 
 builder.Services.AddScoped<ApiAuthenticationStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(p =>

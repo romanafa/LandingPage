@@ -1,0 +1,62 @@
+﻿@page "/groups/edit/{id:int}"
+@inject IGroupService _groupService
+@inject NavigationManager _navManager
+
+<div class="row my-2 mx-4">
+    <h3 class="card-title text-primary mb-3 ml-3">Rediger gruppe</h3>
+
+    <div class="col-10">
+        @if(IsLoading)
+        {
+            <div class="spinner"></div>
+        }
+        else
+        {
+            <EditForm Model="Group" OnValidSubmit="HandleUpdateGroup">
+                <DataAnnotationsValidator/>
+                <div class="form-group">
+                    <label>Gruppenavn</label>
+                    <InputText @bind-Value="Group.GroupName" class="form-control"></InputText>
+                    <ValidationMessage For="()=>Group.GroupName"></ValidationMessage>
+                    <label class="form-check-label">Sett gruppe som aktiv</label>
+                    <InputCheckbox @bind-Value="Group.IsActiveGroup" class="form-check-input"></InputCheckbox>
+                </div>
+
+                <div class="form-group py-2">
+                    <button class="btn btn-primary" type="submit">Lagre</button>
+                    <button @onclick="BackToList" class="btn btn-secondary">Tilbake til grupper</button>
+                </div>
+            </EditForm>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    private GroupUpdateDto Group { get; set; } = new GroupUpdateDto();
+    public bool IsLoading { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        var response = await _groupService.GetForUpdate(Id);
+        if (response.Success)
+        {
+            Group = response.Data;
+        }
+    }
+
+    private async Task HandleUpdateGroup()
+    {
+        var response = await _groupService.Edit(Id, Group);
+        if (response.Success)
+        {
+            BackToList();
+        }
+    }
+
+    private void BackToList()
+    {
+        _navManager.NavigateTo("/groups/");
+    }
+}

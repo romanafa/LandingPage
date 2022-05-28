@@ -1,0 +1,102 @@
+﻿@page "/groups"
+@inject IGroupService _groupService
+@inject IJSRuntime _jsRuntime
+
+
+<_DeleteConfirmation IsProcessing="IsLoading" IsConfirmed="ConfirmDelete"></_DeleteConfirmation>
+
+@if(response.Success == false)
+{
+    <div class="alert alert-danger">
+        <h4>@response.Message</h4>
+    </div>
+}
+else
+{
+    @if (Groups == null)
+    {
+        <div class="spinner"></div>
+    }
+    else
+    {
+        <a href="groups/create" class="btn btn-success"><span class="oi oi-plus" aria-hidden="true"></span> Ny gruppe</a>
+        <br/>
+        <table class="table table-responsive">
+            <thead>
+                <tr>
+                    <th>Gruppenavn</th>
+                    <th>Aktiv</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var group in Groups)
+                {
+                    <tr>
+                        <td>@group.GroupName</td>
+                        <td>
+                            <input type="checkbox" disabled checked="@group.IsActiveGroup">
+                        </td>
+                        <td>
+                            <a href="/groups/details/@group.GroupId" class="btn btn-secondary"><i class="bi bi-eye"></i></a>
+                            <NavLink href="@($"groups/edit/{group.GroupId}")" class="btn btn-primary"><i class="bi bi-pencil-square"></i></NavLink>
+                            @*<button class="btn btn-danger"><i class="bi bi-trash3"></i></button>*@
+                            <button class="btn btn-danger" @onclick="()=>OpenModal(group.GroupId)"><i class="bi bi-trash3"></i></button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+
+@code {
+    private List<GroupReadOnlyDto> Groups;
+    private Response<List<GroupReadOnlyDto>> response = new Response<List<GroupReadOnlyDto>> { Success = true };
+    public bool IsLoading { get; set; }
+    private int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await _groupService.GetGroups();
+        if (response.Success)
+        {
+            Groups = response.Data;
+        }
+    }
+
+    private void OpenModal(int id)
+    {
+        Id = id;
+        _jsRuntime.InvokeVoidAsync("ShowDeleteConfirmationModal");
+    }
+
+    public async Task ConfirmDelete(bool isConfirmed)
+    {
+        IsLoading = true;
+        if(isConfirmed && Id != 0)
+        {
+            var response = await _groupService.Delete(Id);
+            var group = await _groupService.Get(Id);
+            if(response.Success)
+            {
+                await _jsRuntime.InvokeVoidAsync("HideDeleteConfirmationModal");
+                await _jsRuntime.SweetAlertSuccess("Gruppe ble slettet.");
+                await OnInitializedAsync();
+            }
+            else if(group.Data.Tenants.Any())
+            {
+                await _jsRuntime.SweetAlertError("Kan ikke slette gruppe med tenants.");
+            }
+            else
+            {
+                await _jsRuntime.SweetAlertError("Det oppsto et feil.");
+            }
+        }
+        else
+        {
+            await _jsRuntime.SweetAlertError("Det oppsto et feil.");
+        }
+        IsLoading = false;      
+    }
+}
