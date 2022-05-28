@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LandingPage.API.Migrations
 {
     [DbContext(typeof(AthenaPayLandingPageDbContext))]
-    [Migration("20220522131243_SeedsGroupsAndTenants")]
-    partial class SeedsGroupsAndTenants
+    [Migration("20220528125947_RolesUpdates")]
+    partial class RolesUpdates
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,6 +39,63 @@ namespace LandingPage.API.Migrations
                     b.ToTable("ApplicationUserGroup");
                 });
 
+            modelBuilder.Entity("LandingPage.API.Data.ApplicationRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "a998f9ea-d2ef-4835-8744-590e2f4157eb",
+                            ConcurrencyStamp = "bd15f2c6-110b-491f-aef4-a2c3b38bdb4c",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "a5c6115c-a79d-444a-b92a-2f4496e2f175",
+                            ConcurrencyStamp = "24a989a8-02d9-4746-9b4e-16f4dae9ee3c",
+                            Name = "Merchant",
+                            NormalizedName = "MERCHANT"
+                        },
+                        new
+                        {
+                            Id = "ebef473b-b328-426b-b5b7-40008974384c",
+                            ConcurrencyStamp = "f9768ff6-5a92-4ef3-8031-291604447d06",
+                            Name = "Tenant",
+                            NormalizedName = "TENANT"
+                        },
+                        new
+                        {
+                            Id = "9e229e60-a76b-4088-a262-bfa9d8e1a6cd",
+                            ConcurrencyStamp = "a6f4cfb8-e7da-4602-a40a-812f65e29ade",
+                            Name = "NewTenant",
+                            NormalizedName = "NEWTENANT"
+                        });
+                });
+
             modelBuilder.Entity("LandingPage.API.Data.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -59,13 +116,15 @@ namespace LandingPage.API.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -117,7 +176,7 @@ namespace LandingPage.API.Migrations
                         {
                             Id = "e9caf277-b4f7-48d9-a97f-c2533e6adbe3",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "44aed22f-a9dd-4311-aa6a-bd528d65992b",
+                            ConcurrencyStamp = "7adb6da9-d16a-40a2-959a-15ec26621158",
                             Email = "admin@admin.no",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -126,9 +185,8 @@ namespace LandingPage.API.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.NO",
                             NormalizedUserName = "ADMIN@ADMIN.NO",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAgwQRFW8Jo50vuXyiCdL8VtIIwdC2Uy6EutMyx95UenS5vSq6rTYPgULcojQrF7Eg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEF+j+KQv6Qd6Rknfq6pkICnGq/op00wQkKjKVtDSr49vKT/4oyr6eVtqYyOIKTsgrw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "04bc2a70-1767-4e26-b0c6-0f2b96b724a2",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.no"
                         },
@@ -136,7 +194,7 @@ namespace LandingPage.API.Migrations
                         {
                             Id = "b575d83e-27e5-4f5e-8a3d-a607a5bdc0fb",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "21a10ca5-be41-403b-84a8-281fc1504638",
+                            ConcurrencyStamp = "860353ae-25eb-456c-8185-cd26199dc5cd",
                             Email = "merchant@merchant.com",
                             EmailConfirmed = false,
                             FirstName = "Forhandler",
@@ -145,9 +203,8 @@ namespace LandingPage.API.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "MERCHANT@MERCHANT.COM",
                             NormalizedUserName = "MERCHANT@MERCHANT.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEC/avH8sIN3eTFNSNieyJzaCP8qx1byQ4YC8jc7qeEGYthSt6Wn7Iftoo95M9Jt2vg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEF80Z9czoftpnycHpXovSO/9dySAC2beGt1D6Pb/866r0RSzE7ehAPVkrxD7kpYa7Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a567b8d9-b12c-4f55-a3b9-e940be022e05",
                             TwoFactorEnabled = false,
                             UserName = "merchant@merchant.com"
                         },
@@ -155,7 +212,7 @@ namespace LandingPage.API.Migrations
                         {
                             Id = "e20119f7-b5cb-43b3-8183-3f814334b160",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "693ecd47-1c98-49fc-ad72-93e5b3327227",
+                            ConcurrencyStamp = "c917de11-a6bc-44cf-bf94-163f31e13ed4",
                             Email = "tenant@tenant.no",
                             EmailConfirmed = false,
                             FirstName = "Tenant",
@@ -164,11 +221,42 @@ namespace LandingPage.API.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "TENANT@TENANT.NO",
                             NormalizedUserName = "TENANT@TENANT.NO",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBEJCpEirRKl1qRZYGXeIO5UtgG1gXpA1kd6JGjWHTLJDpzphgIv2X1VRhb8ZAtYBw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEI67DCLOIuWTV+2OmZsQbi5vxaL2ti+VZ71rhgKtIUEst9sOrhI1sz1fqkkil5j1yg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e6ac4d40-c6bb-45e4-a963-8b9349b1eb61",
                             TwoFactorEnabled = false,
                             UserName = "tenant@tenant.no"
+                        });
+                });
+
+            modelBuilder.Entity("LandingPage.API.Data.ApplicationUserRole", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "e9caf277-b4f7-48d9-a97f-c2533e6adbe3",
+                            RoleId = "a998f9ea-d2ef-4835-8744-590e2f4157eb"
+                        },
+                        new
+                        {
+                            UserId = "b575d83e-27e5-4f5e-8a3d-a607a5bdc0fb",
+                            RoleId = "a5c6115c-a79d-444a-b92a-2f4496e2f175"
+                        },
+                        new
+                        {
+                            UserId = "e20119f7-b5cb-43b3-8183-3f814334b160",
+                            RoleId = "ebef473b-b328-426b-b5b7-40008974384c"
                         });
                 });
 
@@ -212,6 +300,38 @@ namespace LandingPage.API.Migrations
                         });
                 });
 
+            modelBuilder.Entity("LandingPage.API.Data.GroupTenant", b =>
+                {
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GroupId", "TenantId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("GroupTenants");
+
+                    b.HasData(
+                        new
+                        {
+                            GroupId = 3,
+                            TenantId = 1
+                        },
+                        new
+                        {
+                            GroupId = 3,
+                            TenantId = 2
+                        },
+                        new
+                        {
+                            GroupId = 1,
+                            TenantId = 3
+                        });
+                });
+
             modelBuilder.Entity("LandingPage.API.Data.Tenant", b =>
                 {
                     b.Property<int>("TenantId")
@@ -219,9 +339,6 @@ namespace LandingPage.API.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TenantId"), 1L, 1);
-
-                    b.Property<int?>("GroupId")
-                        .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -236,15 +353,12 @@ namespace LandingPage.API.Migrations
 
                     b.HasKey("TenantId");
 
-                    b.HasIndex("GroupId");
-
                     b.ToTable("Tenants");
 
                     b.HasData(
                         new
                         {
                             TenantId = 1,
-                            GroupId = 1,
                             IsActive = true,
                             TenantName = "Tenant1",
                             Url = "tenant1url.no/activate"
@@ -252,7 +366,6 @@ namespace LandingPage.API.Migrations
                         new
                         {
                             TenantId = 2,
-                            GroupId = 1,
                             IsActive = true,
                             TenantName = "Tenant2",
                             Url = "tenant2url.no/activate"
@@ -260,60 +373,9 @@ namespace LandingPage.API.Migrations
                         new
                         {
                             TenantId = 3,
-                            GroupId = 2,
                             IsActive = true,
                             TenantName = "Tenant3",
                             Url = "tenant3url.no/activate"
-                        });
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "a998f9ea-d2ef-4835-8744-590e2f4157eb",
-                            ConcurrencyStamp = "82058e82-898c-488e-81e0-83405ef5ef92",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "a5c6115c-a79d-444a-b92a-2f4496e2f175",
-                            ConcurrencyStamp = "3b885f36-19e1-44b8-9e1c-55d27c0b24be",
-                            Name = "Merchant",
-                            NormalizedName = "MERCHANT"
-                        },
-                        new
-                        {
-                            Id = "ebef473b-b328-426b-b5b7-40008974384c",
-                            ConcurrencyStamp = "10c53881-4b1a-480b-a133-98b86894f493",
-                            Name = "Tenant",
-                            NormalizedName = "TENANT"
                         });
                 });
 
@@ -389,38 +451,6 @@ namespace LandingPage.API.Migrations
                     b.ToTable("AspNetUserLogins", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "e9caf277-b4f7-48d9-a97f-c2533e6adbe3",
-                            RoleId = "a998f9ea-d2ef-4835-8744-590e2f4157eb"
-                        },
-                        new
-                        {
-                            UserId = "b575d83e-27e5-4f5e-8a3d-a607a5bdc0fb",
-                            RoleId = "a5c6115c-a79d-444a-b92a-2f4496e2f175"
-                        },
-                        new
-                        {
-                            UserId = "e20119f7-b5cb-43b3-8183-3f814334b160",
-                            RoleId = "ebef473b-b328-426b-b5b7-40008974384c"
-                        });
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
@@ -455,19 +485,47 @@ namespace LandingPage.API.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("LandingPage.API.Data.Tenant", b =>
+            modelBuilder.Entity("LandingPage.API.Data.ApplicationUserRole", b =>
+                {
+                    b.HasOne("LandingPage.API.Data.ApplicationRole", "Role")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LandingPage.API.Data.ApplicationUser", "User")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("LandingPage.API.Data.GroupTenant", b =>
                 {
                     b.HasOne("LandingPage.API.Data.Group", "Group")
-                        .WithMany("Tenants")
+                        .WithMany("GroupTenants")
                         .HasForeignKey("GroupId")
-                        .HasConstraintName("FK_Tenants_Groups_GroupId");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LandingPage.API.Data.Tenant", "Tenant")
+                        .WithMany("GroupTenants")
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Group");
+
+                    b.Navigation("Tenant");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("LandingPage.API.Data.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -492,21 +550,6 @@ namespace LandingPage.API.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LandingPage.API.Data.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.HasOne("LandingPage.API.Data.ApplicationUser", null)
@@ -516,9 +559,24 @@ namespace LandingPage.API.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("LandingPage.API.Data.ApplicationRole", b =>
+                {
+                    b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("LandingPage.API.Data.ApplicationUser", b =>
+                {
+                    b.Navigation("UserRoles");
+                });
+
             modelBuilder.Entity("LandingPage.API.Data.Group", b =>
                 {
-                    b.Navigation("Tenants");
+                    b.Navigation("GroupTenants");
+                });
+
+            modelBuilder.Entity("LandingPage.API.Data.Tenant", b =>
+                {
+                    b.Navigation("GroupTenants");
                 });
 #pragma warning restore 612, 618
         }

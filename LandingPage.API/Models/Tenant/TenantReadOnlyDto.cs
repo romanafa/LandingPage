@@ -1,4 +1,7 @@
-﻿namespace LandingPage.API.Models.Tenant
+﻿using LandingPage.API.Data;
+using LandingPage.API.Models.Group;
+
+namespace LandingPage.API.Models.Tenant
 {
     public class TenantReadOnlyDto
     {
@@ -6,7 +9,6 @@
         public string? TenantName { get; set; }
         public string? Url { get; set; }
         public bool IsActive { get; set; }
-        public int GroupId { get; set; }
-        public string GroupName { get; set; }
+        public List<GroupDto> Groups { get; set; }
     }
 }

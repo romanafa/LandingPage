@@ -10,19 +10,26 @@ namespace LandingPage.API.Configurations
     {
         public MapperConfig()
         {
+            //Mapping for Group entity
             CreateMap<GroupCreateDto, Group>().ReverseMap();
             CreateMap<GroupUpdateDto, Group>().ReverseMap();
             CreateMap<GroupReadOnlyDto, Group>().ReverseMap();
+            CreateMap<GroupDto, Group>().ReverseMap();
 
+            //Mapping for Tenant entity
             CreateMap<TenantCreateDto, Tenant>().ReverseMap();
             CreateMap<TenantUpdateDto, Tenant>().ReverseMap();
             CreateMap<TenantReadOnlyDto, Tenant>().ReverseMap();
+            CreateMap<TenantDto, Tenant>().ReverseMap();
 
+            //Mapping for ApplicationUser entity
             CreateMap<ApplicationUser, UserCreateDto>().ReverseMap();
             CreateMap<ApplicationUser, LoginUserDto>().ReverseMap();
             CreateMap<UserReadOnlyDto, ApplicationUser>().ReverseMap();
             CreateMap<UserUpdateDto, ApplicationUser>().ReverseMap();
 
+            //Mapping for ApplicationRole entity
+            CreateMap<RoleDto, ApplicationRole>().ReverseMap();
         }
     }
 }

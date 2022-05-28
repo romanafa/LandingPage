@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LandingPage.API.Data
 {
@@ -9,7 +11,12 @@ namespace LandingPage.API.Data
         public string? TenantName { get; set; }
         public string? Url { get; set; }
         public bool IsActive { get; set; }
-        public int? GroupId { get; set; }
-        public virtual Group? Group { get; set; }
+        public virtual List<GroupTenant> GroupTenants { get; set; }
+
+        [NotMapped]
+        public IEnumerable<Group> Groups
+        {
+            get => GroupTenants?.Select(g => g.Group);
+        }
     }
 }

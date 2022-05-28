@@ -1,4 +1,6 @@
-﻿namespace LandingPage.API.Models.User
+﻿using LandingPage.API.Models.Group;
+
+namespace LandingPage.API.Models.User
 {
     public class UserReadOnlyDto
     {
@@ -8,6 +10,6 @@
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public bool IsActive { get; set; }
-        public string Role { get; set; }
+        public List<RoleDto> Roles { get; set; }
     }
 }

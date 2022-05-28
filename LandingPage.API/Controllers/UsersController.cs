@@ -39,7 +39,10 @@ namespace LandingPage.API.Controllers
 
             try
             {
-                var users = await _context.Users.ToListAsync();
+                var users = await _context.Users
+                    .Include(ur => ur.UserRoles)
+                    .ThenInclude(r => r.Role)
+                    .ToListAsync();
                 var userDtos = mapper.Map<IEnumerable<UserReadOnlyDto>>(users);
                 return Ok(userDtos);
             }
@@ -51,52 +54,6 @@ namespace LandingPage.API.Controllers
 
 
         }
-
-        //// GET: api/<UsersController>
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<UserReadOnlyDto>>> GetUsers()
-        //{
-        //    if (_context.Users == null)
-        //    {
-        //        logger.LogWarning($"Data not found in {nameof(GetUsers)}");
-        //        return NotFound();
-        //    }
-
-        //    try
-        //    {
-        //        var users = await _context.Users
-        //            .Include(q => q.Roles)
-        //            .ToListAsync();
-        //        var userDtos = mapper.Map<IEnumerable<UserReadOnlyDto>, users>(_context.UserRoles.Include(r => r.));
-        //        //return Ok(userDtos);
-        //        var usersWithRoles = (from user in _context.Users
-        //                              select new
-        //                              {
-        //                                  UserId = user.Id,
-        //                                  UserName = user.UserName,
-        //                                  Email = user.Email,
-        //                                  RoleNames = (from userRole in user.Roles
-        //                                               join role in _context.Roles on userRole.RoleId
-        //                                               equals role.Id
-        //                                               select role.Name).ToList()
-        //                              }).ToList().Select(p => new UserReadOnlyDto()
-        //                              {
-        //                                  Id =p.UserId,
-        //                                  UserName =p.UserName,
-        //                                  Email=p.Email,
-        //                                  Role = string.Join(",", p.RoleNames)
-        //                              });
-
-        //        return Ok(usersWithRoles);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        logger.LogError(ex, $"Error: GET in {nameof(GetUsers)}");
-        //        return StatusCode(500, Messages.Error500Message);
-        //    }
-
-
-        //}
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
@@ -110,7 +67,11 @@ namespace LandingPage.API.Controllers
 
             try
             {
-                var user = await _context.Users.FindAsync(id);
+                var user = await _context.Users
+                    .Include(ur => ur.UserRoles)
+                    .ThenInclude(r => r.Role)
+                    .Where(x => x.Id == id)
+                    .FirstOrDefaultAsync();
 
                 if (user == null)
                 {
@@ -218,29 +179,6 @@ namespace LandingPage.API.Controllers
                 return StatusCode(500, Messages.Error500Message);
             }
         }
-
-        //[HttpGet]
-        //public async Task<ActionResult> GetUserRoles()
-        //{
-        //    var usersWithRoles = (from user in _context.Users
-        //                          select new
-        //                          {
-        //                              UserId = user.Id,
-        //                              UserName = user.UserName,
-        //                              Email = user.Email,
-        //                              RoleNames = (from userRole in user.Roles
-        //                                           join role in _context.Roles on userRole.RoleId
-        //                                           equals role.Id select role.Name).ToList()
-        //                          }).ToList().Select(p => new UserReadOnlyDto()
-        //                          {
-        //                              UserId =p.UserId,
-        //                              UserName =p.UserName,
-        //                              Email=p.Email,
-        //                              Role = string.Join(",", p.RoleNames)
-        //                          });
-            
-        //    return Ok(usersWithRoles);
-        //}
 
         private bool UserExists(string id)
         {

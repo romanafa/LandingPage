@@ -7,7 +7,9 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace LandingPage.API.Data
 {
-    public partial class AthenaPayLandingPageDbContext : IdentityDbContext<ApplicationUser>
+    public class AthenaPayLandingPageDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string, IdentityUserClaim<string>,
+ApplicationUserRole, IdentityUserLogin<string>,
+IdentityRoleClaim<string>, IdentityUserToken<string>>
     {
         public AthenaPayLandingPageDbContext()
         {
@@ -20,25 +22,24 @@ namespace LandingPage.API.Data
 
         public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<Tenant> Tenants { get; set; }
+        public virtual DbSet<GroupTenant> GroupTenants { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            //modelBuilder.Entity<ApplicationUserRole>(userRole =>
-            //{
-            //    userRole.HasKey(ur => new { ur.UserId, ur.RoleId });
+            modelBuilder.Entity<ApplicationUserRole>(userRole =>
+            {
+                userRole.HasKey(ur => new { ur.UserId, ur.RoleId });
 
-            //    userRole.HasOne(ur => ur.Role)
-            //        .WithMany(r => r.UserRoles)
-            //        .HasForeignKey(ur => ur.RoleId)
-            //        .IsRequired();
+                userRole.HasOne(ur => ur.Role)
+                    .WithMany(r => r.UserRoles)
+                    .HasForeignKey(ur => ur.RoleId);
 
-            //    userRole.HasOne(ur => ur.User)
-            //        .WithMany(r => r.UserRoles)
-            //        .HasForeignKey(ur => ur.UserId)
-            //        .IsRequired();
-            //});
+                userRole.HasOne(ur => ur.User)
+                    .WithMany(r => r.UserRoles)
+                    .HasForeignKey(ur => ur.UserId);
+            });
 
             modelBuilder.Entity<Group>(entity =>
             {
@@ -50,32 +51,41 @@ namespace LandingPage.API.Data
                 entity.Property(e => e.TenantName).HasMaxLength(50);
                 entity.Property(e => e.Url).HasMaxLength(250);
 
-                entity.HasOne(d => d.Group)
-                        .WithMany(p => p.Tenants)
-                        .HasForeignKey(d => d.GroupId)
-                        .HasConstraintName("FK_Tenants_Groups_GroupId");
             });
 
-            modelBuilder.Entity<IdentityRole>().HasData(
-                new IdentityRole
+            modelBuilder.Entity<GroupTenant>()
+                .HasKey (gt => new { gt.GroupId, gt.TenantId });
+
+            modelBuilder.Entity<GroupTenant>()
+                .HasOne(gt => gt.Group)
+                .WithMany(g => g.GroupTenants)
+                .HasForeignKey(gt => gt.GroupId);
+
+            modelBuilder.Entity<GroupTenant>()
+                  .HasOne(gt => gt.Tenant)
+                  .WithMany(t => t.GroupTenants)
+                  .HasForeignKey(gt => gt.TenantId);
+
+            modelBuilder.Entity<ApplicationRole>().HasData(
+                new ApplicationRole
                 {
                     Name = "Admin",
                     NormalizedName = "ADMIN",
                     Id = "a998f9ea-d2ef-4835-8744-590e2f4157eb"
                 },
-                new IdentityRole
+                new ApplicationRole
                 {
                     Name = "Merchant",
                     NormalizedName = "MERCHANT",
                     Id = "a5c6115c-a79d-444a-b92a-2f4496e2f175"
                 },
-                new IdentityRole
+                new ApplicationRole
                 {
                     Name = "Tenant",
                     NormalizedName = "TENANT",
                     Id = "ebef473b-b328-426b-b5b7-40008974384c"
                 },
-                new IdentityRole
+                new ApplicationRole
                 {
                     Name = "NewTenant",
                     NormalizedName = "NEWTENANT",
@@ -124,18 +134,18 @@ namespace LandingPage.API.Data
                 }
                 );
 
-            modelBuilder.Entity<IdentityUserRole<string>>().HasData(
-                new IdentityUserRole<string>
+            modelBuilder.Entity<ApplicationUserRole>().HasData(
+                new ApplicationUserRole
                 {
                     RoleId = "a998f9ea-d2ef-4835-8744-590e2f4157eb",
                     UserId = "e9caf277-b4f7-48d9-a97f-c2533e6adbe3"
                 },
-                new IdentityUserRole<string>
+                new ApplicationUserRole
                 {
                     RoleId = "a5c6115c-a79d-444a-b92a-2f4496e2f175",
                     UserId = "b575d83e-27e5-4f5e-8a3d-a607a5bdc0fb"
                 },
-                new IdentityUserRole<string>
+                new ApplicationUserRole
                 {
                     RoleId = "ebef473b-b328-426b-b5b7-40008974384c",
                     UserId = "e20119f7-b5cb-43b3-8183-3f814334b160"
@@ -148,24 +158,21 @@ namespace LandingPage.API.Data
                     TenantName = "Tenant1",
                     Url = "tenant1url.no/activate",
                     IsActive = true,
-                    TenantId = 1,
-                    GroupId = 1
+                    TenantId = 1
                 },
                 new Tenant
                 {
                     TenantName = "Tenant2",
                     Url = "tenant2url.no/activate",
                     IsActive = true,
-                    TenantId = 2,
-                    GroupId = 1
+                    TenantId = 2
                 },
                 new Tenant
                 {
                     TenantName = "Tenant3",
                     Url = "tenant3url.no/activate",
                     IsActive = true,
-                    TenantId = 3,
-                    GroupId = 2
+                    TenantId = 3
                 }
              );
 
@@ -187,8 +194,27 @@ namespace LandingPage.API.Data
                     GroupName = "Group3",
                     IsActiveGroup = true,
                     GroupId = 3
-                }
+                }  
              );
+
+            modelBuilder.Entity<GroupTenant>().HasData(
+                new GroupTenant
+                {
+                    TenantId = 1,
+                    GroupId = 3
+                },
+                new GroupTenant
+                {
+                    TenantId = 2,
+                    GroupId = 3
+                },
+                new GroupTenant
+                {
+                    TenantId = 3,
+                    GroupId = 1
+                }
+
+            );
         }
     }
 }

@@ -15,7 +15,7 @@ namespace LandingPage.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class TenantsController : ControllerBase
     {
         private readonly AthenaPayLandingPageDbContext _context;
@@ -42,8 +42,10 @@ namespace LandingPage.API.Controllers
             try
             {
                 var tenants = await _context.Tenants
-                .Include(q => q.Group)
-                .ToListAsync();
+                    .Include(qt => qt.GroupTenants)
+                    .ThenInclude(g => g.Group)
+                    .ToListAsync();
+                
                 var tenantDtos = mapper.Map<IEnumerable<TenantReadOnlyDto>>(tenants);
                 return Ok(tenantDtos);
             }
@@ -67,14 +69,18 @@ namespace LandingPage.API.Controllers
             try
             {
                 var tenant = await _context.Tenants
-                .Include(q => q.Group)
-                .FirstOrDefaultAsync(q => q.TenantId == id);
+                .Include(qt => qt.GroupTenants)
+                .ThenInclude(g => g.Group)
+                .Where(x => x.TenantId == id)
+                .FirstOrDefaultAsync();
 
                 if (tenant == null)
                 {
                     return NotFound();
                 }
-                var tenantDto = mapper.Map<IEnumerable<TenantReadOnlyDto>>(tenant);
+
+                var tenantDto = mapper.Map<TenantReadOnlyDto>(tenant);
+
                 return Ok(tenantDto);
             }
             catch (Exception ex)
@@ -87,7 +93,7 @@ namespace LandingPage.API.Controllers
         // PUT: api/Tenants/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> PutTenant(int id, TenantUpdateDto tenantDto)
         {
             if (id != tenantDto.TenantId)
@@ -100,12 +106,12 @@ namespace LandingPage.API.Controllers
 
             if (tenant == null)
             {
-                logger.LogWarning($"{nameof(Group)} not found in  {nameof(PutTenant)} - ID: {id}");
+                logger.LogWarning($"{nameof(Tenant)} not found in  {nameof(PutTenant)} - ID: {id}");
                 return NotFound();
             }
 
             mapper.Map(tenantDto, tenant);
-            _context.Entry(tenantDto).State = EntityState.Modified;
+            _context.Entry(tenant).State = EntityState.Modified;
 
             try
             {

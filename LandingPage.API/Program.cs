@@ -14,7 +14,7 @@ builder.Services.AddDbContext<AthenaPayLandingPageDbContext>(options =>
       options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddIdentityCore<ApplicationUser>()
-    .AddRoles<IdentityRole>()
+    .AddRoles<ApplicationRole>()
     .AddEntityFrameworkStores<AthenaPayLandingPageDbContext>();
 
 builder.Services.AddAutoMapper(typeof(MapperConfig));

@@ -10,7 +10,5 @@ namespace LandingPage.API.Models.Tenant
         [Required(ErrorMessage = "Url mangler")]
         public string Url { get; set; }
         public bool IsActive { get; set; }
-        [Range(0, int.MaxValue)]
-        public int? GroupId { get; set; }
     }
 }

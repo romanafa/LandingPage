@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LandingPage.API.Migrations
 {
     [DbContext(typeof(AthenaPayLandingPageDbContext))]
-    [Migration("20220514134645_ExtendedUserTable")]
-    partial class ExtendedUserTable
+    [Migration("20220526144353_update")]
+    partial class update
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,21 @@ namespace LandingPage.API.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("ApplicationUserGroup", b =>
+                {
+                    b.Property<int>("GroupsGroupId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsersId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("GroupsGroupId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("ApplicationUserGroup");
+                });
 
             modelBuilder.Entity("LandingPage.API.Data.ApplicationUser", b =>
                 {
@@ -44,13 +59,15 @@ namespace LandingPage.API.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -96,6 +113,65 @@ namespace LandingPage.API.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "e9caf277-b4f7-48d9-a97f-c2533e6adbe3",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "db9551e1-2ff9-443e-bf6d-858f8ba8fd46",
+                            Email = "admin@admin.no",
+                            EmailConfirmed = false,
+                            FirstName = "Admin",
+                            IsActive = true,
+                            LastName = "Bruker",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@ADMIN.NO",
+                            NormalizedUserName = "ADMIN@ADMIN.NO",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPttdjNrhlAfh00/wAzEnZBiy+QO+KVo4+6MzJ5UCmOamsgBnQtJS06MBJviES3/eA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "d667427d-0c3c-4745-81f1-590426fe9bc6",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@admin.no"
+                        },
+                        new
+                        {
+                            Id = "b575d83e-27e5-4f5e-8a3d-a607a5bdc0fb",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "b213add4-67aa-4c8d-94f3-1d9ea8f44d93",
+                            Email = "merchant@merchant.com",
+                            EmailConfirmed = false,
+                            FirstName = "Forhandler",
+                            IsActive = true,
+                            LastName = "Bruker",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "MERCHANT@MERCHANT.COM",
+                            NormalizedUserName = "MERCHANT@MERCHANT.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFN9rCapHLLmdAcsxLz//qKOqHVYQppUXQxfK71cdl9N73Z9pUXgrBeeVkWOqms5Mw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "07a8ba5a-46ef-4d87-8312-b0bd2685baca",
+                            TwoFactorEnabled = false,
+                            UserName = "merchant@merchant.com"
+                        },
+                        new
+                        {
+                            Id = "e20119f7-b5cb-43b3-8183-3f814334b160",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "a5fc0c1f-afbc-4899-8a6d-94def56b276b",
+                            Email = "tenant@tenant.no",
+                            EmailConfirmed = false,
+                            FirstName = "Tenant",
+                            IsActive = true,
+                            LastName = "Bruker",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "TENANT@TENANT.NO",
+                            NormalizedUserName = "TENANT@TENANT.NO",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOErS6iifK4YfGKTkky8BGgWfJrXBBD8USkaiVOaHXZVj7fDdvhntuWPS8VYmDNV1A==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "5937256b-2640-4997-b049-45b03f69e0e9",
+                            TwoFactorEnabled = false,
+                            UserName = "tenant@tenant.no"
+                        });
                 });
 
             modelBuilder.Entity("LandingPage.API.Data.Group", b =>
@@ -106,9 +182,6 @@ namespace LandingPage.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GroupId"), 1L, 1);
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("GroupName")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -118,9 +191,59 @@ namespace LandingPage.API.Migrations
 
                     b.HasKey("GroupId");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.ToTable("Groups");
+
+                    b.HasData(
+                        new
+                        {
+                            GroupId = 1,
+                            GroupName = "Group1",
+                            IsActiveGroup = true
+                        },
+                        new
+                        {
+                            GroupId = 2,
+                            GroupName = "Group2",
+                            IsActiveGroup = true
+                        },
+                        new
+                        {
+                            GroupId = 3,
+                            GroupName = "Group3",
+                            IsActiveGroup = true
+                        });
+                });
+
+            modelBuilder.Entity("LandingPage.API.Data.GroupTenant", b =>
+                {
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GroupId", "TenantId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("GroupTenants");
+
+                    b.HasData(
+                        new
+                        {
+                            GroupId = 3,
+                            TenantId = 1
+                        },
+                        new
+                        {
+                            GroupId = 3,
+                            TenantId = 2
+                        },
+                        new
+                        {
+                            GroupId = 1,
+                            TenantId = 3
+                        });
                 });
 
             modelBuilder.Entity("LandingPage.API.Data.Tenant", b =>
@@ -130,9 +253,6 @@ namespace LandingPage.API.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TenantId"), 1L, 1);
-
-                    b.Property<int?>("GroupId")
-                        .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -147,9 +267,30 @@ namespace LandingPage.API.Migrations
 
                     b.HasKey("TenantId");
 
-                    b.HasIndex("GroupId");
-
                     b.ToTable("Tenants");
+
+                    b.HasData(
+                        new
+                        {
+                            TenantId = 1,
+                            IsActive = true,
+                            TenantName = "Tenant1",
+                            Url = "tenant1url.no/activate"
+                        },
+                        new
+                        {
+                            TenantId = 2,
+                            IsActive = true,
+                            TenantName = "Tenant2",
+                            Url = "tenant2url.no/activate"
+                        },
+                        new
+                        {
+                            TenantId = 3,
+                            IsActive = true,
+                            TenantName = "Tenant3",
+                            Url = "tenant3url.no/activate"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -177,6 +318,36 @@ namespace LandingPage.API.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "a998f9ea-d2ef-4835-8744-590e2f4157eb",
+                            ConcurrencyStamp = "905e435a-b04b-495a-9738-82824c9194ff",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "a5c6115c-a79d-444a-b92a-2f4496e2f175",
+                            ConcurrencyStamp = "e69ff015-cdf8-4f80-85d6-dc7dff90a081",
+                            Name = "Merchant",
+                            NormalizedName = "MERCHANT"
+                        },
+                        new
+                        {
+                            Id = "ebef473b-b328-426b-b5b7-40008974384c",
+                            ConcurrencyStamp = "5d2da787-eb61-4d04-b967-0fbb95c94555",
+                            Name = "Tenant",
+                            NormalizedName = "TENANT"
+                        },
+                        new
+                        {
+                            Id = "9e229e60-a76b-4088-a262-bfa9d8e1a6cd",
+                            ConcurrencyStamp = "ef4651e4-582c-476a-a3c7-15e0a0dc3bc5",
+                            Name = "NewTenant",
+                            NormalizedName = "NEWTENANT"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -264,6 +435,23 @@ namespace LandingPage.API.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "e9caf277-b4f7-48d9-a97f-c2533e6adbe3",
+                            RoleId = "a998f9ea-d2ef-4835-8744-590e2f4157eb"
+                        },
+                        new
+                        {
+                            UserId = "b575d83e-27e5-4f5e-8a3d-a607a5bdc0fb",
+                            RoleId = "a5c6115c-a79d-444a-b92a-2f4496e2f175"
+                        },
+                        new
+                        {
+                            UserId = "e20119f7-b5cb-43b3-8183-3f814334b160",
+                            RoleId = "ebef473b-b328-426b-b5b7-40008974384c"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -285,21 +473,38 @@ namespace LandingPage.API.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("LandingPage.API.Data.Group", b =>
+            modelBuilder.Entity("ApplicationUserGroup", b =>
                 {
+                    b.HasOne("LandingPage.API.Data.Group", null)
+                        .WithMany()
+                        .HasForeignKey("GroupsGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("LandingPage.API.Data.ApplicationUser", null)
-                        .WithMany("Groups")
-                        .HasForeignKey("ApplicationUserId");
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("LandingPage.API.Data.Tenant", b =>
+            modelBuilder.Entity("LandingPage.API.Data.GroupTenant", b =>
                 {
                     b.HasOne("LandingPage.API.Data.Group", "Group")
-                        .WithMany("Tenants")
+                        .WithMany("GroupTenants")
                         .HasForeignKey("GroupId")
-                        .HasConstraintName("FK_Tenants_Groups_GroupId");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LandingPage.API.Data.Tenant", "Tenant")
+                        .WithMany("GroupTenants")
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Group");
+
+                    b.Navigation("Tenant");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -353,14 +558,14 @@ namespace LandingPage.API.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("LandingPage.API.Data.ApplicationUser", b =>
-                {
-                    b.Navigation("Groups");
-                });
-
             modelBuilder.Entity("LandingPage.API.Data.Group", b =>
                 {
-                    b.Navigation("Tenants");
+                    b.Navigation("GroupTenants");
+                });
+
+            modelBuilder.Entity("LandingPage.API.Data.Tenant", b =>
+                {
+                    b.Navigation("GroupTenants");
                 });
 #pragma warning restore 612, 618
         }

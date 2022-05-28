@@ -15,7 +15,7 @@ namespace LandingPage.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+   // [Authorize]
     public class GroupsController : ControllerBase
     {
         private readonly AthenaPayLandingPageDbContext _context;
@@ -43,6 +43,8 @@ namespace LandingPage.API.Controllers
             {
                 var groups = await _context.Groups
                     .Include(q => q.Users)
+                    .Include(gt => gt.GroupTenants)
+                    .ThenInclude(t => t.Tenant)
                     .ToListAsync();
                 var groupDtos = mapper.Map<IEnumerable<GroupReadOnlyDto>>(groups);
                 return Ok(groupDtos);
@@ -69,6 +71,8 @@ namespace LandingPage.API.Controllers
             {
                 var group = await _context.Groups
                     .Include(q => q.Users)
+                    .Include(gt => gt.GroupTenants)
+                    .ThenInclude(t => t.Tenant)
                     .FirstOrDefaultAsync(q => q.GroupId == id);
 
                 if (group == null)
