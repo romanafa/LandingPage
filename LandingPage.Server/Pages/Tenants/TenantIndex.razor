@@ -1,5 +1,5 @@
-﻿@page "/groups"
-@inject IGroupService _groupService
+﻿@page "/tenants"
+@inject ITenantService _tenantService
 @inject IJSRuntime _jsRuntime
 
 
@@ -12,16 +12,16 @@
     </div>
 }
 else
-{  
+{
     <div class="row mt-4 mx-4">
         <div class="mx-2">
-         <h3>Alle grupper</h3>
-            <a href="groups/create" class="btn btn-success">
-                <span class="oi oi-plus" aria-hidden="true"></span> Ny gruppe
+         <h3>Alle tenants</h3>
+            <a href="tenants/create" class="btn btn-success">
+                <span class="oi oi-plus" aria-hidden="true"></span> Ny Tenant
             </a>
         </div>
         <div class="col-12 p-3 table-responsive-sm">
-            @if (Groups == null)
+            @if (Tenants == null)
             {
                 if (IsLoading)
                 {
@@ -29,7 +29,7 @@ else
                 }
                 else
                 {
-                    <p>Ingen grupper</p>
+                    <p>Ingen tenants</p>
                 }   
             }
             else
@@ -37,26 +37,28 @@ else
                 <table class="table table-bordered table-hover">
                     <thead class="table-secondary">
                         <tr>
-                            <th>Gruppenavn</th>
+                            <th>Tenant navn</th>
+                            <th>Url</th>
                             <th>Aktiv</th>
-                            <th> </th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var group in Groups)
-                        {
-                            <tr>
-                                <td>@group.GroupName</td>
-                                <td>
-                                    <input type="checkbox" disabled checked="@group.IsActiveGroup">
-                                </td>
-                                <td>
-                                    <a href="/groups/details/@group.GroupId" class="btn btn-secondary"><i class="bi bi-eye"></i></a>
-                                    <a href="@($"groups/edit/{group.GroupId}")" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
-                                    <button class="btn btn-danger" @onclick="()=>OpenModal(group.GroupId)"><i class="bi bi-trash3"></i></button>
-                                </td>
-                            </tr>
-                        }
+                    @foreach (var tenant in Tenants)
+                    {
+                        <tr>
+                            <td>@tenant.TenantName</td>
+                            <td>@tenant.Url</td>
+                            <td>
+                                <input type="checkbox" disabled checked="@tenant.IsActive">
+                            </td>
+                            <td>
+                                <a href="/tenants/details/@tenant.TenantId" class="btn btn-secondary"><i class="bi bi-eye"></i></a>
+                                <a href="@($"tenant/edit/{tenant.TenantId}")" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
+                                <button class="btn btn-danger" @onclick="()=>OpenModal(tenant.TenantId)"><i class="bi bi-trash3"></i></button>
+                            </td>
+                        </tr>
+                    }
                     </tbody>
                 </table>
             }
@@ -65,18 +67,18 @@ else
 }
 
 @code {
-    private List<GroupReadOnlyDto> Groups;
-    private Response<List<GroupReadOnlyDto>> response = new Response<List<GroupReadOnlyDto>> { Success = true };
+    private List<TenantReadOnlyDto> Tenants;
+    private Response<List<TenantReadOnlyDto>> response = new Response<List<TenantReadOnlyDto>> { Success = true };
     public bool IsLoading { get; set; }
     private int Id { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         IsLoading = true;
-        var response = await _groupService.GetGroups();
+        var response = await _tenantService.GetTenants();
         if (response.Success)
         {
-            Groups = response.Data;
+            Tenants = response.Data;
             IsLoading = false;
         }
     }
@@ -92,11 +94,11 @@ else
         IsLoading = true;
         if(isConfirmed && Id != 0)
         {
-            var response = await _groupService.Delete(Id);
+            var response = await _tenantService.Delete(Id);
             if(response.Success)
             {
                 await _jsRuntime.InvokeVoidAsync("HideDeleteConfirmationModal");
-                await _jsRuntime.SweetAlertSuccess("Gruppe ble slettet.");
+                await _jsRuntime.SweetAlertSuccess("Tenant ble slettet.");
                 await OnInitializedAsync();
             }
             else

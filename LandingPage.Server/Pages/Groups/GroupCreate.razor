@@ -1,6 +1,7 @@
 ﻿@page "/groups/create"
 @inject IGroupService _groupService
 @inject NavigationManager _navManager
+@inject IJSRuntime _jsRuntime
 
 <div class="row my-2 mx-4">
     <h3 class="card-title text-primary mb-3 ml-3">Ny gruppe</h3>
@@ -40,7 +41,12 @@
         var response = await _groupService.Create(Group);
         if (response.Success)
         {
+            await _jsRuntime.SweetAlertSuccess("Ny gruppe ble lagt til.");
             BackToList();
+        }
+        else
+        {
+            await _jsRuntime.SweetAlertError("Det oppsto en feil.");
         }
     }
 

@@ -1,0 +1,74 @@
+﻿@page "/tenants/edit/{id:int}"
+@inject ITenantService _tenantService
+@inject NavigationManager _navManager
+@inject IJSRuntime _jsRuntime
+
+<div class="row my-2 mx-4">
+    <h3 class="card-title text-primary mb-3 ml-3">Rediger tenant</h3>
+
+    <div class="col-10">
+        @if(IsLoading)
+        {
+            <div class="spinner"></div>
+        }
+        else
+        {
+            <EditForm Model="Tenant" OnValidSubmit="HandleUpdateTenant">
+                <DataAnnotationsValidator/>
+                <div class="form-group">
+                    <label>Tenantnavn</label>
+                    <InputText @bind-Value="Tenant.TenantName" class="form-control"></InputText>
+                    <ValidationMessage For="()=>Tenant.TenantName"></ValidationMessage>
+                    <label>Url</label>
+                    <InputText @bind-Value="Tenant.Url" class="form-control"></InputText>
+                    <ValidationMessage For="()=>Tenant.Url"></ValidationMessage>
+                    <label class="form-check-label">Sett tenant som aktiv</label>
+                    <InputCheckbox @bind-Value="Tenant.IsActive" class="form-check-input"></InputCheckbox>
+                </div>
+
+                <div class="form-group py-2">
+                    <button class="btn btn-primary" type="submit">Lagre</button>
+                    <button @onclick="BackToList" class="btn btn-secondary">Tilbake til tenants</button>
+                </div>
+            </EditForm>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    private TenantUpdateDto Tenant { get; set; } = new TenantUpdateDto();
+    public bool IsLoading { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        IsLoading = true;
+        var response = await _tenantService.GetForUpdate(Id);
+        if (response.Success)
+        {
+            Tenant = response.Data;
+            IsLoading = false;
+        }
+    }
+
+    private async Task HandleUpdateTenant()
+    {
+        var response = await _tenantService.Edit(Id, Tenant);
+        if (response.Success)
+        {
+            await _jsRuntime.SweetAlertSuccess("Tenant ble oppdatert.");
+            BackToList();
+        }
+        else
+        {
+            await _jsRuntime.SweetAlertError("Det oppsto en feil.");
+        }
+    }
+
+    private void BackToList()
+    {
+        _navManager.NavigateTo("/tenants/");
+    }
+}
+

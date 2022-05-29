@@ -1,0 +1,69 @@
+﻿@page "/tenants/details/{id:int}"
+@inject ITenantService _tenantService
+@inject NavigationManager _navManager
+
+<div class="row my-2 mx-4">
+    <h3 class="card-title text-primary mb-3 ml-3">Tenant</h3>
+
+    <div class="col-3">
+        @if(IsLoading)
+        {
+            <div class="spinner"></div>
+        }
+        else
+        {
+            <EditForm Model="Tenant">
+                <fieldset disabled>
+                    <div class="form-group">
+                        <label>Tenantnavn</label>
+                        <InputText @bind-Value="Tenant.TenantName" class="form-control"></InputText>
+                        <label>Url</label>
+                        <InputText @bind-Value="Tenant.Url" class="form-control"></InputText>
+                        <label class="form-check-label">Tenant er aktiv</label>
+                        <input type="checkbox" disabled checked="@Tenant.IsActive">
+                    </div>
+                </fieldset> 
+                <br/>
+                <button @onclick="GoToEdit" class="btn btn-primary">
+                    <i class="bi bi-pencil-square"></i>
+                    Rediger
+                </button>
+
+                <button @onclick="BackToList" class="btn btn-outline-secondary">
+                    Tilbake til alle tenants
+                </button>
+            </EditForm>
+
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    private TenantReadOnlyDto Tenant = new TenantReadOnlyDto();
+    public bool IsLoading { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        IsLoading = true;
+        var response = await _tenantService.Get(Id);
+        if (response.Success)
+        {
+            Tenant = response.Data;
+            IsLoading = false;
+        }
+    }
+
+    private void BackToList()
+    {
+        _navManager.NavigateTo("/tenants");
+    }
+
+    private void GoToEdit()
+    {
+        _navManager.NavigateTo($"/tenants/edit/{Tenant.TenantId}");
+    }
+
+}
+

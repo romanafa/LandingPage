@@ -1,6 +1,7 @@
 ﻿@page "/groups/edit/{id:int}"
 @inject IGroupService _groupService
 @inject NavigationManager _navManager
+@inject IJSRuntime _jsRuntime
 
 <div class="row my-2 mx-4">
     <h3 class="card-title text-primary mb-3 ml-3">Rediger gruppe</h3>
@@ -39,10 +40,12 @@
 
     protected async override Task OnInitializedAsync()
     {
+        IsLoading = true;
         var response = await _groupService.GetForUpdate(Id);
         if (response.Success)
         {
             Group = response.Data;
+            IsLoading = false;
         }
     }
 
@@ -51,7 +54,12 @@
         var response = await _groupService.Edit(Id, Group);
         if (response.Success)
         {
+            await _jsRuntime.SweetAlertSuccess("Gruppe ble oppdatert.");
             BackToList();
+        }
+        else
+        {
+            await _jsRuntime.SweetAlertError("Det oppsto en feil.");
         }
     }
 

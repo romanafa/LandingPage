@@ -34,7 +34,7 @@
                             <div class="col-3">
                                 <div class="card" style="width: 18rem;">
                                   <div class="card-body">
-                                    <h5 class="card-title">@tenant.Tenant.TenantName</h5>
+                                    <h5 class="card-title">@tenant.TenantName</h5>
                                     <p class="card-text"></p>
                                     @*<a href="/tenants/details/@tenant.TenantId" class="btn btn-primary">Vis tenant</a>*@
                                   </div>
@@ -66,10 +66,12 @@
 
     protected async override Task OnInitializedAsync()
     {
+        IsLoading = true;
         var response = await _groupService.Get(Id);
         if (response.Success)
         {
             Group = response.Data;
+            IsLoading = false;
         }
     }
 
