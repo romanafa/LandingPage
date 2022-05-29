@@ -17,12 +17,14 @@ namespace LandingPage.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly AthenaPayLandingPageDbContext _context;
+        private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly IMapper mapper;
         private readonly ILogger<UsersController> logger;
 
-        public UsersController(AthenaPayLandingPageDbContext context, IMapper mapper, ILogger<UsersController> logger)
+        public UsersController(AthenaPayLandingPageDbContext context, RoleManager<ApplicationRole> roleManager, IMapper mapper, ILogger<UsersController> logger)
         {
             _context = context;
+            _roleManager = roleManager;
             this.mapper = mapper;
             this.logger = logger;
         }
@@ -51,8 +53,6 @@ namespace LandingPage.API.Controllers
                 logger.LogError(ex, $"Error: GET in {nameof(GetUsers)}");
                 return StatusCode(500, Messages.Error500Message);
             }
-
-
         }
 
         // GET api/<UsersController>/5
@@ -180,9 +180,33 @@ namespace LandingPage.API.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("Roles")]
+        public async Task<ActionResult<IEnumerable<RoleDto>>> GetAllRoles()
+        {
+            if (_roleManager.Roles == null)
+            {
+                logger.LogWarning($"Data not found in {nameof(GetAllRoles)}");
+                return NotFound();
+            }
+            try
+            {
+                var roles = await _roleManager.Roles.ToListAsync();
+                var roleDtos = mapper.Map<IEnumerable<RoleDto>>(roles);
+
+                return Ok(roleDtos);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, $"Error: GET in {nameof(GetAllRoles)}");
+                return StatusCode(500, Messages.Error500Message);
+            }
+        }
+
         private bool UserExists(string id)
         {
             return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
+
 }

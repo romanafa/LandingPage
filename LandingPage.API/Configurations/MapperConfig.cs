@@ -30,6 +30,7 @@ namespace LandingPage.API.Configurations
 
             //Mapping for ApplicationRole entity
             CreateMap<RoleDto, ApplicationRole>().ReverseMap();
+            CreateMap<RoleDto, ApplicationUserRole>().ReverseMap();
         }
     }
 }

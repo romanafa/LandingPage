@@ -34,7 +34,7 @@ namespace LandingPage.API.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("ApplicationUserGroup");
+                    b.ToTable("ApplicationUserGroup", (string)null);
                 });
 
             modelBuilder.Entity("LandingPage.API.Data.ApplicationRole", b =>
@@ -275,7 +275,7 @@ namespace LandingPage.API.Migrations
 
                     b.HasKey("GroupId");
 
-                    b.ToTable("Groups");
+                    b.ToTable("Groups", (string)null);
 
                     b.HasData(
                         new
@@ -310,7 +310,7 @@ namespace LandingPage.API.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("GroupTenants");
+                    b.ToTable("GroupTenants", (string)null);
 
                     b.HasData(
                         new
@@ -351,7 +351,7 @@ namespace LandingPage.API.Migrations
 
                     b.HasKey("TenantId");
 
-                    b.ToTable("Tenants");
+                    b.ToTable("Tenants", (string)null);
 
                     b.HasData(
                         new
