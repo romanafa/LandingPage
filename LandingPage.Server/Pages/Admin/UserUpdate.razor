@@ -1,0 +1,86 @@
+﻿@page "/users/edit/{id}"
+@inject IUserService _userService
+@inject NavigationManager _navManager
+@inject IJSRuntime _jsRuntime
+
+<div class="row my-2 mx-4">
+    <h3 class="card-title text-primary mb-3 ml-3">Rediger bruker</h3>
+
+    <div class="col-10">
+        @if(IsLoading)
+        {
+            <div class="spinner"></div>
+        }
+        else
+        {
+            <EditForm Model="User" OnValidSubmit="HandleUpdateUser">
+                <DataAnnotationsValidator/>
+                <div class="form-group">
+                    <label>Brukernavn</label>
+                    <InputText @bind-Value="User.UserName" class="form-control"></InputText>
+                    <ValidationMessage For="()=>User.UserName"></ValidationMessage>
+                    <label>E-post</label>
+                    <InputText @bind-Value="User.Email" class="form-control"></InputText>
+                    <ValidationMessage For="()=>User.Email"></ValidationMessage>
+                    <label>Førstenavn</label>
+                    <InputText @bind-Value="User.FirstName" class="form-control"></InputText>
+                    <ValidationMessage For="()=>User.FirstName"></ValidationMessage>
+                    <label>Etternavn</label>
+                    <InputText @bind-Value="User.LastName" class="form-control"></InputText>
+                    <ValidationMessage For="()=>User.LastName"></ValidationMessage>
+                </div>
+                <div class="row pt-3">
+                    <div class="form-group col-6">
+                        <div class="form-check">
+                            <label class="form-check-label">Sett bruker som aktiv</label>
+                            <InputCheckbox @bind-Value="User.IsActive" class="form-check-input"></InputCheckbox>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group py-2">
+                    <button class="btn btn-primary" type="submit">Lagre</button>
+                    <button @onclick="BackToList" class="btn btn-secondary">Tilbake til brukere</button>
+                </div>
+            </EditForm>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    private UserUpdateDto User { get; set; } = new UserUpdateDto();
+    public bool IsLoading { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        IsLoading = true;
+        var response = await _userService.GetForUpdate(Id);
+        if (response.Success)
+        {
+            User = response.Data;
+            IsLoading = false;
+        }
+    }
+
+    private async Task HandleUpdateUser()
+    {
+        var response = await _userService.Edit(Id, User);
+        if (response.Success)
+        {
+            await _jsRuntime.SweetAlertSuccess("Bruker ble oppdatert.");
+            BackToList();
+        }
+        else
+        {
+            await _jsRuntime.SweetAlertError("Det oppsto en feil.");
+        }
+    }
+
+    private void BackToList()
+    {
+        _navManager.NavigateTo("/users/");
+    }
+}

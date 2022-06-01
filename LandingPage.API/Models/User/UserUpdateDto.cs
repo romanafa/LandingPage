@@ -14,7 +14,5 @@ namespace LandingPage.API.Models.User
         [Required(ErrorMessage = "Etternavn mangler")]
         public string LastName { get; set; }
         public bool IsActive { get; set; }
-        public string RoleId { get; set; }
-        public List<RoleDto> Roles { get; set; }
     }
 }

@@ -26,7 +26,17 @@ namespace LandingPage.API.Configurations
             CreateMap<ApplicationUser, UserCreateDto>().ReverseMap();
             CreateMap<ApplicationUser, LoginUserDto>().ReverseMap();
             CreateMap<UserReadOnlyDto, ApplicationUser>().ReverseMap();
-            CreateMap<UserUpdateDto, ApplicationUser>().ReverseMap();
+            CreateMap<ApplicationUser, UserUpdateDto>().ReverseMap();
+
+            //CreateMap<UserUpdateDto, ApplicationUser>()
+            //    .ForMember(dest => dest.Roles,
+            //    opt => opt.MapFrom(src => src.Roles))
+            //    .ReverseMap();
+
+            //CreateMap<ApplicationUser, UserUpdateDto>()
+            //    .ForMember(dest => dest.Roles,
+            //    opt => opt.MapFrom(src => src.UserRoles.Select(r => r.Role).ToList()))
+            //    .ReverseMap();
 
             //Mapping for ApplicationRole entity
             CreateMap<RoleDto, ApplicationRole>().ReverseMap();

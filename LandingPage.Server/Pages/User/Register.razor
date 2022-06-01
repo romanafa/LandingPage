@@ -47,10 +47,7 @@
 </div>
 
 @code {
-    UserCreateDto RegistrationModel = new UserCreateDto
-        {
-            Role = "NewTenant"
-    };
+    UserCreateDto RegistrationModel = new UserCreateDto();
 
     string message = string.Empty;
     private async Task HandleRegistration()

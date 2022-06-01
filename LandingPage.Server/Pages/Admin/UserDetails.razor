@@ -1,0 +1,79 @@
+﻿@page "/users/details/{id}"
+@inject IUserService _userService
+@inject NavigationManager _navManager
+
+<div class="row my-2 mx-4">
+    <h3 class="card-title text-primary mb-3 ml-3">Bruker</h3>
+
+    <div class="col-3">
+        @if(IsLoading)
+        {
+            <div class="spinner"></div>
+        }
+        else
+        {
+            <EditForm Model="User">
+                <fieldset disabled>
+                    <div class="form-group">
+                        <label>Brukernavn</label>
+                        <InputText @bind-Value="User.UserName" class="form-control"></InputText>
+                        <label>E-post</label>
+                        <InputText @bind-Value="User.Email" class="form-control"></InputText>
+                        <label>Førstenavn</label>
+                        <InputText @bind-Value="User.FirstName" class="form-control"></InputText>
+                        <label>Etternavn</label>
+                        <InputText @bind-Value="User.LastName" class="form-control"></InputText>
+                        <label>Brukerrolle</label>
+                        @foreach (var userRole in User.Roles)
+                        {
+                            <InputText @bind-Value="userRole.Name" class="form-control"></InputText>
+                        }
+                        <label class="form-check-label">Bruker er aktiv</label>
+                        <input type="checkbox" disabled checked="@User.IsActive">
+                    </div>
+                </fieldset> 
+                <br/>
+                <button @onclick="GoToEdit" class="btn btn-primary">
+                    <i class="bi bi-pencil-square"></i>
+                    Rediger
+                </button>
+
+                <button @onclick="BackToList" class="btn btn-outline-secondary">
+                    Tilbake til alle brukere
+                </button>
+            </EditForm>
+
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+    private UserReadOnlyDto User = new UserReadOnlyDto();
+    public bool IsLoading { get; set; }
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        IsLoading = true;
+        var response = await _userService.Get(Id);
+        if (response.Success)
+        {
+            
+            User = response.Data;
+            IsLoading = false;
+        }
+    }
+
+    private void BackToList()
+    {
+        _navManager.NavigateTo("/users");
+    }
+
+    private void GoToEdit()
+    {
+        _navManager.NavigateTo($"/users/edit/{User.Id}");
+    }
+
+}

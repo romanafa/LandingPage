@@ -13,7 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AthenaPayLandingPageDbContext>(options =>
       options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddIdentityCore<ApplicationUser>()
+builder.Services.AddIdentityCore<ApplicationUser>(
+    options => options.User.RequireUniqueEmail = true)
     .AddRoles<ApplicationRole>()
     .AddEntityFrameworkStores<AthenaPayLandingPageDbContext>();
 

@@ -17,14 +17,17 @@ namespace LandingPage.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly AthenaPayLandingPageDbContext _context;
-        private readonly RoleManager<ApplicationRole> _roleManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper mapper;
         private readonly ILogger<UsersController> logger;
 
-        public UsersController(AthenaPayLandingPageDbContext context, RoleManager<ApplicationRole> roleManager, IMapper mapper, ILogger<UsersController> logger)
+        public UsersController(AthenaPayLandingPageDbContext context,
+            UserManager<ApplicationUser> userManager,
+            IMapper mapper, 
+            ILogger<UsersController> logger)
         {
             _context = context;
-            _roleManager = roleManager;
+            _userManager = userManager;
             this.mapper = mapper;
             this.logger = logger;
         }
@@ -99,7 +102,11 @@ namespace LandingPage.API.Controllers
                 return BadRequest();
             }
 
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users
+                .Include(ur => ur.UserRoles)
+                .ThenInclude(r => r.Role)
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
 
             if (user == null)
             {
@@ -108,7 +115,6 @@ namespace LandingPage.API.Controllers
             }
 
             mapper.Map(userDto, user);
-
             _context.Entry(user).State = EntityState.Modified;
 
             try
@@ -128,7 +134,6 @@ namespace LandingPage.API.Controllers
                     return StatusCode(500, Messages.Error500Message);
                 }
             }
-
             return NoContent();
         }
 
@@ -140,12 +145,12 @@ namespace LandingPage.API.Controllers
 
             try
             {
-                var user = mapper.Map<ApplicationUser>(userDto);
+                var user = mapper.Map<ApplicationUser>(userDto); 
                 user.UserName = userDto.Email;
+                user.SecurityStamp = Guid.NewGuid().ToString();
                 user.PasswordHash = hasher.HashPassword(null, userDto.Password);
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
-
                 return CreatedAtAction("GetUser", new { id = user.Id }, user);
             }
             catch (Exception ex)
@@ -176,29 +181,6 @@ namespace LandingPage.API.Controllers
             catch (Exception ex)
             {
                 logger.LogError(ex, $"Error: DELETE in {nameof(DeleteUser)}");
-                return StatusCode(500, Messages.Error500Message);
-            }
-        }
-
-        [HttpGet]
-        [Route("Roles")]
-        public async Task<ActionResult<IEnumerable<RoleDto>>> GetAllRoles()
-        {
-            if (_roleManager.Roles == null)
-            {
-                logger.LogWarning($"Data not found in {nameof(GetAllRoles)}");
-                return NotFound();
-            }
-            try
-            {
-                var roles = await _roleManager.Roles.ToListAsync();
-                var roleDtos = mapper.Map<IEnumerable<RoleDto>>(roles);
-
-                return Ok(roleDtos);
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, $"Error: GET in {nameof(GetAllRoles)}");
                 return StatusCode(500, Messages.Error500Message);
             }
         }

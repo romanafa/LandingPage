@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandingPage.API", "LandingP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandingPage.Server", "LandingPage.Server\LandingPage.Server.csproj", "{D1930405-3E84-407F-9A30-49A9A1D961EC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LandingPage.Tests", "LandingPage.Tests\LandingPage.Tests.csproj", "{B3B2CC7B-8356-4513-8F00-552A8AE711B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D1930405-3E84-407F-9A30-49A9A1D961EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1930405-3E84-407F-9A30-49A9A1D961EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1930405-3E84-407F-9A30-49A9A1D961EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3B2CC7B-8356-4513-8F00-552A8AE711B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3B2CC7B-8356-4513-8F00-552A8AE711B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3B2CC7B-8356-4513-8F00-552A8AE711B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3B2CC7B-8356-4513-8F00-552A8AE711B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,10 +6,10 @@ namespace LandingPage.API.Data
     public class ApplicationRole : IdentityRole
     {
         public List<ApplicationUserRole> UserRoles { get; set; }
-        [NotMapped]
-        public IEnumerable<ApplicationRole> Roles
-        {
-            get => UserRoles.Select(x => x.Role);
-        }
+        //[NotMapped]
+        //public IEnumerable<ApplicationRole> Roles
+        //{
+        //    get => UserRoles.Select(x => x.Role);
+        //}
     }
 }

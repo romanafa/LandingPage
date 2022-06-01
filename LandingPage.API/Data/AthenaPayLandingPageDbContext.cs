@@ -41,6 +41,10 @@ IdentityRoleClaim<string>, IdentityUserToken<string>>
                     .HasForeignKey(ur => ur.UserId);
             });
 
+            modelBuilder.Entity<ApplicationUser>()
+                        .Property(e => e.Id)
+                        .ValueGeneratedOnAdd();
+
             modelBuilder.Entity<Group>(entity =>
             {
                 entity.Property(e => e.GroupName).HasMaxLength(50);

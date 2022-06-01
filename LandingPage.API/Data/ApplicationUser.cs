@@ -12,13 +12,12 @@ namespace LandingPage.API.Data
         public string? LastName { get; set; }
         public bool? IsActive { get; set; } = true;
         public ICollection<Group> Groups { get; set; }
-        public virtual List<ApplicationUserRole> UserRoles { get; set; }
+        public virtual List<ApplicationUserRole>? UserRoles { get; set; }
 
         [NotMapped]
-        public IEnumerable<ApplicationRole> Roles
+        public IEnumerable<ApplicationRole>? Roles
         {
-            get => UserRoles.Select(x => x.Role);
+            get => UserRoles?.Select(x => x.Role);
         }
-
     }
 }
