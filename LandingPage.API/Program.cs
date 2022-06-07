@@ -1,3 +1,4 @@
+using EmailService;
 using LandingPage.API.Configurations;
 using LandingPage.API.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -5,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using Microsoft.Extensions.Configuration;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +21,11 @@ builder.Services.AddIdentityCore<ApplicationUser>(
     .AddEntityFrameworkStores<AthenaPayLandingPageDbContext>();
 
 builder.Services.AddAutoMapper(typeof(MapperConfig));
+
+//var emailConfig = Configuration
+//        .GetSection("EmailConfiguration")
+//        .Get<EmailConfiguration>();
+//builder.Services.AddSingleton(emailConfig);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

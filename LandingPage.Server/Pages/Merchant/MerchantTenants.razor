@@ -1,0 +1,80 @@
+﻿@page "/merchant/tenants"
+
+<AuthorizeView Roles="Merchant">
+
+    <div class="row mt-4 mx-4">
+            <div class="mx-2">
+             <h3>Mine tenants</h3>
+            
+            </div>
+            <div class="col-12 p-3 table-responsive-sm">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-secondary">
+                            <tr>
+                                <th>Tenant navn</th>
+                                <th>Url</th>
+                                <th>Aktiv</th>
+                                <th>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Tenant1</td>
+                                <td>tenant1.activate.url</td>
+                                <td>
+                                    <input type="checkbox" disabled checked="checked">
+                                </td>
+                                <td>
+                                    <a href="" class="btn btn-secondary"><i class="bi bi-eye"></i></a>
+                                    <a href="" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
+                                    <a href="" class="btn btn-danger"><i class="bi bi-trash3"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tenant2</td>
+                                <td>tenant2.activate.url</td>
+                                <td>
+                                    <input type="checkbox" disabled checked="checked">
+                                </td>
+                                <td>
+                                    <a href="" class="btn btn-secondary"><i class="bi bi-eye"></i></a>
+                                    <a href="" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
+                                    <a href="" class="btn btn-danger"><i class="bi bi-trash3"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tenant3</td>
+                                <td>tenant3.activate.url</td>
+                                <td>
+                                    <input type="checkbox" disabled checked="checked">
+                                </td>
+                                <td>
+                                    <a href="" class="btn btn-secondary"><i class="bi bi-eye"></i></a>
+                                    <a href="" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
+                                    <a href="" class="btn btn-danger"><i class="bi bi-trash3"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tenant2</td>
+                                <td>tenant4.activate.url</td>
+                                <td>
+                                    <input type="checkbox" disabled checked="checked">
+                                </td>
+                                <td>
+                                    <a href="" class="btn btn-secondary"><i class="bi bi-eye"></i></a>
+                                    <a href="" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
+                                    <a href="" class="btn btn-danger"><i class="bi bi-trash3"></i></a>
+                                </td>
+                            </tr>
+                        
+                        </tbody>
+                    </table>
+        
+                </div>
+            </div>
+</AuthorizeView>
+
+@code {
+
+}

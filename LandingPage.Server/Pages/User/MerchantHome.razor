@@ -1,0 +1,19 @@
+﻿@inject IJSRuntime _jsRuntime
+@attribute [Authorize(Roles = "Merchant")]
+
+<div class="h-100 d-flex align-items-center justify-content-center"> 
+
+    <div class="col-4 p-2 m-5 list-group">
+        <a href="user" class="list-group-item list-group-item-action active justify-content-between align-items-center d-flex">Velg installasjon<i class="bi bi-arrow-right-square"></i></a>
+        <a href="merchant/groups" class="list-group-item list-group-item-action justify-content-between align-items-center d-flex">Vis mine grupper<i class="bi bi-list"></i> </a>
+        <a href="merchant/tenants" class="list-group-item list-group-item-action justify-content-between align-items-center d-flex">Vis alle installasjoner<i class="bi bi-list"></i> </a>
+        @*<button @onclick="()=>OpenUserModal()" class="list-group-item list-group-item-action"><i class="bi bi-plus-circle"></i>  Legg til bruker</button>*@
+    </div>
+</div>
+
+
+
+
+@code {
+
+}

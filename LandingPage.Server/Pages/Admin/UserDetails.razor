@@ -2,50 +2,55 @@
 @inject IUserService _userService
 @inject NavigationManager _navManager
 
-<div class="row my-2 mx-4">
-    <h3 class="card-title text-primary mb-3 ml-3">Bruker</h3>
+@*<AuthorizeView Roles="Admin">*@
+    <div class="h-100 d-flex align-items-center justify-content-center">    
+        <div class="col-3">
+            <h3 class="card-title text-primary mb-3 ml-3">Bruker</h3>
+            @if(IsLoading)
+            {
+                <div class="spinner"></div>
+            }
+            else
+            {
+                <EditForm Model="User">
+                    <fieldset disabled>
+                        <div class="form-group">
+                            <label>Brukernavn</label>
+                            <InputText @bind-Value="User.UserName" class="form-control"></InputText>
+                            <label>E-post</label>
+                            <InputText @bind-Value="User.Email" class="form-control"></InputText>
+                            <label>Førstenavn</label>
+                            <InputText @bind-Value="User.FirstName" class="form-control"></InputText>
+                            <label>Etternavn</label>
+                            <InputText @bind-Value="User.LastName" class="form-control"></InputText>
+                            <label>Brukerrolle</label>
+                            @if(User.Roles.Count == 0)
+                            {
+                                <p>Ingen role tildelt</p>
+                            }
+                            @foreach (var userRole in User.Roles)
+                            {
+                                <InputText @bind-Value="userRole.Name" class="form-control"></InputText>   
+                            }
+                            <label class="form-check-label">Bruker er aktiv</label>
+                            <input type="checkbox" disabled checked="@User.IsActive">
+                        </div>
+                    </fieldset> 
+                    <br/>
+                    <button @onclick="GoToEdit" class="btn btn-primary">
+                        <i class="bi bi-pencil-square"></i>
+                        Rediger
+                    </button>
 
-    <div class="col-3">
-        @if(IsLoading)
-        {
-            <div class="spinner"></div>
-        }
-        else
-        {
-            <EditForm Model="User">
-                <fieldset disabled>
-                    <div class="form-group">
-                        <label>Brukernavn</label>
-                        <InputText @bind-Value="User.UserName" class="form-control"></InputText>
-                        <label>E-post</label>
-                        <InputText @bind-Value="User.Email" class="form-control"></InputText>
-                        <label>Førstenavn</label>
-                        <InputText @bind-Value="User.FirstName" class="form-control"></InputText>
-                        <label>Etternavn</label>
-                        <InputText @bind-Value="User.LastName" class="form-control"></InputText>
-                        <label>Brukerrolle</label>
-                        @foreach (var userRole in User.Roles)
-                        {
-                            <InputText @bind-Value="userRole.Name" class="form-control"></InputText>
-                        }
-                        <label class="form-check-label">Bruker er aktiv</label>
-                        <input type="checkbox" disabled checked="@User.IsActive">
-                    </div>
-                </fieldset> 
-                <br/>
-                <button @onclick="GoToEdit" class="btn btn-primary">
-                    <i class="bi bi-pencil-square"></i>
-                    Rediger
-                </button>
+                    <button @onclick="BackToList" class="btn btn-outline-secondary">
+                        Tilbake til alle brukere
+                    </button>
+                </EditForm>
 
-                <button @onclick="BackToList" class="btn btn-outline-secondary">
-                    Tilbake til alle brukere
-                </button>
-            </EditForm>
-
-        }
+            }
+        </div>
     </div>
-</div>
+@*</AuthorizeView>*@
 
 @code {
     [Parameter]

@@ -1,40 +1,60 @@
 ﻿@page "/users/login"
+
 @inject NavigationManager _navManager
 @inject IAuthenticationService _authService
+@inject IJSRuntime _jsRuntime
 
-<div class="row d-flex align-items-center justify-content-center">
-    <div class="col-md-4">
-        <EditForm Model="LoginModel" OnValidSubmit="HandleLogin">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-            <div class="form-group">
-                <label for="email">E-post</label>
-                <InputText class="form-control" @bind-Value="LoginModel.Email" />
-                <ValidationMessage For="@(() => LoginModel.Email)" />
+<section class="vh-100"> 
+<div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                <div class="card-body p-5 text-center">
+                    <h3>Athena.Pay</h3>
+                    <h4 class="mb-5">Logg inn</h4>
+                    <EditForm Model="LoginModel" OnValidSubmit="HandleLogin">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+                        <div class="form-group">
+                                <InputText placeholder="E-post" class="form-control" @bind-Value="LoginModel.Email" />
+                                <ValidationMessage For="@(() => LoginModel.Email)" />
+                        </div>
+                        <br/>
+                        <div class="form-group">
+                            <InputText placeholder="Passord" class="form-control" type="password" @bind-Value="LoginModel.Password" />
+                            <ValidationMessage For="@(() => LoginModel.Password)" />
+                        </div>
+                        <br/>
+                        <button type="submit" class="btn btn-primary btn-block">Logg inn</button>
+                        <div>
+                            <br />
+                    <p>
+                        <a href="/forgotPassword">Glemt passord?</a>
+                    </p>
+                </div>
+                    </EditForm>
+                </div>
             </div>
-            <br/>
-            <div class="form-group">
-                <label for="email">Passord</label>
-                <InputText class="form-control" type="password" @bind-Value="LoginModel.Password" />
-                <ValidationMessage For="@(() => LoginModel.Password)" />
-            </div>
-            <br/>
-            <button type="submit" class="btn btn-primary btn-block">Logg inn</button>
-        </EditForm>
+        </div>
     </div>
 </div>
+</section>
 
 @code {
     LoginUserDto LoginModel = new LoginUserDto();
-        string message = string.Empty;
+    string message = string.Empty;
 
-        public async Task HandleLogin()
-        {
-            var response = await _authService.AuthenticateAsync(LoginModel);
+    public async Task HandleLogin()
+    {
+        var response = await _authService.AuthenticateAsync(LoginModel);
 
             if (response.Success)
             {
                 _navManager.NavigateTo("/");
+            }
+            else
+            {
+                await _jsRuntime.SweetAlertError("Ugyldig passord eller brukernavn.");
             }
 
             message = response.Message;

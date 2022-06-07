@@ -1,0 +1,76 @@
+﻿@inject IUserService _userService
+@inject NavigationManager _navManager
+@inject IJSRuntime _jsRuntime
+
+<div class="modal fade" data-backdrop="static" data-keyboard="false" id="addUserModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog  modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ny bruker</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">🗙</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <EditForm Model="User" OnValidSubmit="AddUser">
+                <DataAnnotationsValidator/>
+                <div class="form-group">
+                    <label>E-post</label>
+                    <InputText @bind-Value="User.Email" class="form-control"></InputText>   
+                    <ValidationMessage For="()=>User.Email"></ValidationMessage>
+                    <label>Førstenavn</label>
+                    <InputText @bind-Value="User.FirstName" class="form-control"></InputText>
+                    <label>Etternavn</label>
+                    <InputText @bind-Value="User.LastName" class="form-control"></InputText>   
+
+                </div>
+                
+                @if (IsProcessing)
+                    {
+                        <div class="form-group py-2">
+                            
+                            <button type="button" class="btn btn-success" disabled">
+                                Lagrer...
+                            </button>
+                        </div>
+                    }
+                else
+                    {    
+                    <div class="form-group py-2">
+                        <button type="submit" class="btn btn-success">Lagre</button>
+                        </div>                 
+                    }
+                </EditForm>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+@code
+{
+    [Parameter]
+    public bool IsProcessing { get; set; }
+    private UserCreateDto User { get; set; } = new UserCreateDto();
+
+    private async Task AddUser()
+    {
+        var response = await _userService.Create(User);
+        if (response.Success)
+        {
+            CloseModal();
+            await _jsRuntime.SweetAlertSuccess("Ny bruker ble lagt til.");
+        }
+        else
+        {
+            await _jsRuntime.SweetAlertError("Det oppsto en feil.");
+        }
+        
+    }
+
+    private void CloseModal()
+    {
+        _jsRuntime.InvokeVoidAsync("HideAddUserModal");
+    }
+
+}

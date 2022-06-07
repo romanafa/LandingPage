@@ -1,4 +1,5 @@
 ﻿@inject IJSRuntime _jsRuntime
+@inject AuthenticationStateProvider _authenticationStateProvider
 
 <AuthorizeView>
     <Authorized> 
@@ -24,10 +25,23 @@
 
 @code {
     public int Id;
+   
 
+
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    UserId = GetUserId();
+    //}
     private void DropdownToggle()
     {
         _jsRuntime.InvokeVoidAsync("DropdownToggle");
     }
+
+    //private async string GetUserId(){
+    //    var user = (await _authenticationStateProvider.GetAuthenticationStateAsync()).User;
+    //    var UserId = user.FindFirst(u => u.Type.Contains("nameidentifier"))?.Value;
+    //    return UserId;
+    //}
+
 }
 

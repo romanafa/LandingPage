@@ -1,5 +1,65 @@
-﻿<h3>UserCreate</h3>
+﻿@page "/users/create"
+@inject IUserService _userService
+@inject NavigationManager _navManager
+@inject IJSRuntime _jsRuntime
+
+@*<AuthorizeView Roles="Admin">*@
+    <div class="h-100 d-flex align-items-center justify-content-center">    
+
+        <div class="col-3">
+            <h3 class="card-title text-primary mb-3 ml-3">Ny bruker</h3>
+            @if(IsLoading)
+            {
+                <div class="spinner"></div>
+            }
+            else
+            {
+                <EditForm Model="User" OnValidSubmit="HandleCreateUser">
+                    <DataAnnotationsValidator/>
+                    <div class="form-group">
+
+                        <label>E-post</label>
+                        <InputText @bind-Value="User.Email" class="form-control"></InputText>
+                        <ValidationMessage For="()=>User.Email"></ValidationMessage>
+                        <label>Førstenavn</label>
+                        <InputText @bind-Value="User.FirstName" class="form-control"></InputText>
+                        <ValidationMessage For="()=>User.FirstName"></ValidationMessage>
+                        <label>Etternavn</label>
+                        <InputText @bind-Value="User.LastName" class="form-control"></InputText>
+                        <ValidationMessage For="()=>User.LastName"></ValidationMessage>
+                    </div>
+
+
+                    <div class="form-group py-2">
+                        <button class="btn btn-primary" type="submit">Lagre</button>
+                    </div>
+                </EditForm>
+                <button @onclick="BackToList" class="btn btn-secondary">Tilbake til brukere</button>
+            }
+        </div>
+    </div>
+@*</AuthorizeView>*@
 
 @code {
+    private UserCreateDto User { get; set; } = new UserCreateDto();
+    public bool IsLoading { get; set; }
 
+    private async Task HandleCreateUser()
+    {
+        var response = await _userService.Create(User);
+        if (response.Success)
+        {
+            await _jsRuntime.SweetAlertSuccess("Ny bruker ble lagt til.");
+            BackToList();
+        }
+        else
+        {
+            await _jsRuntime.SweetAlertError("Det oppsto en feil.");
+        }
+    }
+
+    private void BackToList()
+    {
+        _navManager.NavigateTo("/users/");
+    }
 }

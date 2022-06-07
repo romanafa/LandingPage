@@ -2,70 +2,72 @@
 @inject ITenantService _tenantService
 @inject IJSRuntime _jsRuntime
 
-
+<AuthorizeView Roles="Admin">
 <_DeleteConfirmation IsProcessing="IsLoading" IsConfirmed="ConfirmDelete"></_DeleteConfirmation>
 
-@if(response.Success == false)
-{
-    <div class="alert alert-danger">
-        <h4>@response.Message</h4>
-    </div>
-}
-else
-{
-    <div class="row mt-4 mx-4">
-        <div class="mx-2">
-         <h3>Alle tenants</h3>
-            <a href="tenants/create" class="btn btn-success">
-                <span class="oi oi-plus" aria-hidden="true"></span> Ny Tenant
-            </a>
+    @if(response.Success == false)
+    {
+        <div class="alert alert-danger">
+            <h4>@response.Message</h4>
         </div>
-        <div class="col-12 p-3 table-responsive-sm">
-            @if (Tenants == null)
-            {
-                if (IsLoading)
+    }
+    else
+    {
+        <div class="row mt-4 mx-4">
+            <div class="mx-2">
+             <h3>Administrere tenants</h3>
+            
+            </div>
+            <div class="col-12 p-3 table-responsive-sm">
+                @if (Tenants == null)
                 {
-                    <div class="spinner"></div>
+                    if (IsLoading)
+                    {
+                        <div class="spinner"></div>
+                    }
+                    else
+                    {
+                        <p>Ingen tenants</p>
+                    }   
                 }
                 else
                 {
-                    <p>Ingen tenants</p>
-                }   
-            }
-            else
-            {
-                <table class="table table-bordered table-hover">
-                    <thead class="table-secondary">
-                        <tr>
-                            <th>Tenant navn</th>
-                            <th>Url</th>
-                            <th>Aktiv</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @foreach (var tenant in Tenants)
-                    {
-                        <tr>
-                            <td>@tenant.TenantName</td>
-                            <td>@tenant.Url</td>
-                            <td>
-                                <input type="checkbox" disabled checked="@tenant.IsActive">
-                            </td>
-                            <td>
-                                <a href="/tenants/details/@tenant.TenantId" class="btn btn-secondary"><i class="bi bi-eye"></i></a>
-                                <a href="@($"tenant/edit/{tenant.TenantId}")" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
-                                <button class="btn btn-danger" @onclick="()=>OpenModal(tenant.TenantId)"><i class="bi bi-trash3"></i></button>
-                            </td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
-            }
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-secondary">
+                            <tr>
+                                <th>Tenant navn</th>
+                                <th>Url</th>
+                                <th>Aktiv</th>
+                                <th>
+                                    <a href="tenants/create" class="btn btn-success">
+                                    <span class="oi oi-plus" aria-hidden="true"></span> Ny Tenant
+                                    </a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var tenant in Tenants)
+                        {
+                            <tr>
+                                <td>@tenant.TenantName</td>
+                                <td>@tenant.Url</td>
+                                <td>
+                                    <input type="checkbox" disabled checked="@tenant.IsActive">
+                                </td>
+                                <td>
+                                    <a href="/tenants/details/@tenant.TenantId" class="btn btn-secondary"><i class="bi bi-eye"></i></a>
+                                    <a href="@($"tenant/edit/{tenant.TenantId}")" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
+                                    <button class="btn btn-danger" @onclick="()=>OpenModal(tenant.TenantId)"><i class="bi bi-trash3"></i></button>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                }
+                </div>
             </div>
-        </div>
-}
-
+    }
+</AuthorizeView>
 @code {
     private List<TenantReadOnlyDto> Tenants;
     private Response<List<TenantReadOnlyDto>> response = new Response<List<TenantReadOnlyDto>> { Success = true };

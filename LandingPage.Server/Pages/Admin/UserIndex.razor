@@ -2,61 +2,73 @@
 @inject IUserService _userService
 @inject IJSRuntime _jsRuntime
 
-
+<AuthorizeView Roles="Admin">
 <_DeleteConfirmation IsProcessing="IsLoading" IsConfirmed="ConfirmDelete"></_DeleteConfirmation>
 
-@if(response.Success == false)
-{
-    <div class="alert alert-danger">
-        <h4>@response.Message</h4>
-    </div>
-}
-else
-{
-    <div class="row mt-4 mx-4">
-        <div class="mx-2">
-         <h3>Alle brukere</h3>
-            <a href="users/create" class="btn btn-success">
-                <span class="oi oi-plus" aria-hidden="true"></span> Ny Bruker
-            </a>
+    @if(response.Success == false)
+    {
+        <div class="alert alert-danger">
+            <h4>@response.Message</h4>
         </div>
-        <div class="col-12 p-3 table-responsive-sm">
-            @if (Users == null)
-            {
-                if (IsLoading)
+    }
+    else
+    {
+        <div class="row mt-4 mx-4">
+
+                <div class="mx-2 col align-self-start">
+                    <h3>Administrer brukere</h3>
+                </div>  
+
+            <div class="col-12 p-3 table-responsive-sm">
+                @if (Users == null)
                 {
-                    <div class="spinner"></div>
+                    if (IsLoading)
+                    {
+                        <div class="spinner"></div>
+                    }
+                    else
+                    {
+                        <p>Ingen brukere</p>
+                    }   
                 }
                 else
                 {
-                    <p>Ingen brukere</p>
-                }   
-            }
-            else
-            {
-                <table class="table table-bordered table-hover">
-                    <thead class="table-secondary">
-                        <tr>
-                            <th>Brukernavn</th>
-                            <th>E-post</th>
-                            <th>Førstenavn</th>
-                            <th>Etternavn</th>
-                            <th>Brukerrolle</th>
-                            <th>Aktiv</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @foreach (var user in Users)
-                    {
-                        <tr>
-                            <td>@user.UserName</td>
-                            <td>@user.Email</td>
-                            <td>@user.FirstName</td>
-                            <td>@user.LastName</td>
-                            @foreach (var userRole in @user.Roles)
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-secondary">
+                            <tr>
+                                <th>Brukernavn</th>
+                                <th>E-post</th>
+                                <th>Førstenavn</th>
+                                <th>Etternavn</th>
+                                <th>Brukerrolle</th>
+                                <th>Aktiv</th>
+                                <th><a href="users/create" class="btn btn-success">
+                        <i class="bi bi-person-plus-fill"></i> Ny bruker
+                    </a></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var user in Users)
+                        {
+                            <tr>
+                                <td>@user.UserName</td>
+                                <td>@user.Email</td>
+                                <td>@user.FirstName</td>
+                                <td>@user.LastName</td>
+                                @if(@user.Roles.Count == 0)
                                 {
-                                    <td>@userRole.Name</td>
+                                    <td>Ingen role tildelt</td>
+                                }
+                                else
+                                {
+                                    @foreach (var userRole in @user.Roles)
+                                    {
+                                        if((userRole.Name != null))
+                                        {
+                                            <td>@userRole.Name</td>  
+                                        }
+                                     
+                                    }
                                 }
                                 <td>
                                     <input type="checkbox" disabled checked="@user.IsActive">
@@ -66,14 +78,15 @@ else
                                     <a href="@($"users/edit/{user.Id}")" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
                                     <button class="btn btn-danger" @onclick="()=>OpenModal(user.Id)"><i class="bi bi-trash3"></i></button>
                                 </td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
-            }
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                }
+                </div>
             </div>
-        </div>
-}
+    }
+</AuthorizeView>
 
 @code {
     private List<UserReadOnlyDto> Users;

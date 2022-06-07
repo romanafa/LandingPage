@@ -1,0 +1,32 @@
+﻿@page "/profile"
+
+@inject IUserService _userService
+@inject NavigationManager _navManager
+
+<div class="h-100 d-flex align-items-center justify-content-center">    
+        <div class="col-3">
+            <h3 class="card-title text-primary mb-3 ml-3">Kontoopplysninger</h3>
+            <div class="card" style="width: 18rem;">
+
+
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"><a href="#" class="btn btn-light"><i class="bi bi-pencil"></i></a>  Brukernavn</li>
+    <li class="list-group-item"><a href="#" class="btn btn-light"><i class="bi bi-pencil"></i></a>  Førstenavn</li>
+    <li class="list-group-item"><a href="#" class="btn btn-light"><i class="bi bi-pencil"></i></a>  Etternavn</li>
+  </ul>
+  <div class="card-body">
+    <a href="#" class="card-link">Endre passord</a>
+  </div>
+</div>
+    </div>
+</div>
+
+
+@code {
+    //public string? Username;
+    //public string Id;
+    //public string Email;
+    //public string FirstName;
+    //public string LastName;
+    
+}

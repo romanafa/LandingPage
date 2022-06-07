@@ -1,8 +1,28 @@
 ﻿@page "/"
+@inject NavigationManager _navManager
 
 <PageTitle>Index</PageTitle>
-<h1>Hello, world!</h1>
 
 <AuthorizeView Roles="Admin">
     <AdminHome></AdminHome>
 </AuthorizeView>
+<AuthorizeView Roles="Merchant">
+    <MerchantHome></MerchantHome>
+</AuthorizeView>
+<AuthorizeView Roles="Tenant">
+    <TenantHome></TenantHome>
+</AuthorizeView>
+
+@code {
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationState {  get;  set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationState;
+        if (!authState.User.Identity.IsAuthenticated)
+        {
+            _navManager.NavigateTo("/users/login", forceLoad: true);
+        }
+    }
+}

@@ -15,7 +15,7 @@ namespace LandingPage.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-   // [Authorize]
+    [Authorize]
     public class GroupsController : ControllerBase
     {
         private readonly AthenaPayLandingPageDbContext _context;

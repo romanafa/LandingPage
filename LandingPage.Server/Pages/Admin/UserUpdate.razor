@@ -3,49 +3,50 @@
 @inject NavigationManager _navManager
 @inject IJSRuntime _jsRuntime
 
-<div class="row my-2 mx-4">
-    <h3 class="card-title text-primary mb-3 ml-3">Rediger bruker</h3>
-
-    <div class="col-10">
-        @if(IsLoading)
-        {
-            <div class="spinner"></div>
-        }
-        else
-        {
-            <EditForm Model="User" OnValidSubmit="HandleUpdateUser">
-                <DataAnnotationsValidator/>
-                <div class="form-group">
-                    <label>Brukernavn</label>
-                    <InputText @bind-Value="User.UserName" class="form-control"></InputText>
-                    <ValidationMessage For="()=>User.UserName"></ValidationMessage>
-                    <label>E-post</label>
-                    <InputText @bind-Value="User.Email" class="form-control"></InputText>
-                    <ValidationMessage For="()=>User.Email"></ValidationMessage>
-                    <label>Førstenavn</label>
-                    <InputText @bind-Value="User.FirstName" class="form-control"></InputText>
-                    <ValidationMessage For="()=>User.FirstName"></ValidationMessage>
-                    <label>Etternavn</label>
-                    <InputText @bind-Value="User.LastName" class="form-control"></InputText>
-                    <ValidationMessage For="()=>User.LastName"></ValidationMessage>
-                </div>
-                <div class="row pt-3">
-                    <div class="form-group col-6">
-                        <div class="form-check">
-                            <label class="form-check-label">Sett bruker som aktiv</label>
-                            <InputCheckbox @bind-Value="User.IsActive" class="form-check-input"></InputCheckbox>
+@*<AuthorizeView Roles="Admin">*@
+    <div class="h-100 d-flex align-items-center justify-content-center">    
+        <div class="col-3">
+            <h3 class="card-title text-primary mb-3 ml-3">Bruker informasjon</h3>
+            @if(IsLoading)
+            {
+                <div class="spinner"></div>
+            }
+            else
+            {
+                <EditForm Model="User" OnValidSubmit="HandleUpdateUser">
+                    <DataAnnotationsValidator/>
+                    <div class="form-group">
+                        <label>Brukernavn</label>
+                        <InputText @bind-Value="User.UserName" class="form-control"></InputText>
+                        <ValidationMessage For="()=>User.UserName"></ValidationMessage>
+                        <label>E-post</label>
+                        <InputText @bind-Value="User.Email" class="form-control"></InputText>
+                        <ValidationMessage For="()=>User.Email"></ValidationMessage>
+                        <label>Førstenavn</label>
+                        <InputText @bind-Value="User.FirstName" class="form-control"></InputText>
+                        <ValidationMessage For="()=>User.FirstName"></ValidationMessage>
+                        <label>Etternavn</label>
+                        <InputText @bind-Value="User.LastName" class="form-control"></InputText>
+                        <ValidationMessage For="()=>User.LastName"></ValidationMessage>
+                    </div>
+                    <div class="row pt-3">
+                        <div class="form-group col-6">
+                            <div class="form-check">
+                                <label class="form-check-label">Sett bruker som aktiv</label>
+                                <InputCheckbox @bind-Value="User.IsActive" class="form-check-input"></InputCheckbox>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="form-group py-2">
-                    <button class="btn btn-primary" type="submit">Lagre</button>
-                    <button @onclick="BackToList" class="btn btn-secondary">Tilbake til brukere</button>
-                </div>
-            </EditForm>
-        }
+                    <div class="form-group py-2">
+                        <button class="btn btn-primary" type="submit">Lagre</button>
+                    </div>
+                </EditForm>
+                <button @onclick="BackToList" class="btn btn-secondary">Tilbake til brukere</button>
+            }
+        </div>
     </div>
-</div>
+@*</AuthorizeView>*@
 
 @code {
     [Parameter]

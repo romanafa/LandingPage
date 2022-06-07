@@ -67,28 +67,28 @@ namespace LandingPage.API.Migrations
                         new
                         {
                             Id = "a998f9ea-d2ef-4835-8744-590e2f4157eb",
-                            ConcurrencyStamp = "b9432e0e-7dd1-493e-ba6f-6989abaf8c30",
+                            ConcurrencyStamp = "31a59e00-9c75-4aba-b898-2edabe7bc1a2",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "a5c6115c-a79d-444a-b92a-2f4496e2f175",
-                            ConcurrencyStamp = "14e99c22-82c2-42fc-8f6f-0fd5e505b10f",
+                            ConcurrencyStamp = "9fc8f25a-6168-49de-b600-f8dfb1132ece",
                             Name = "Merchant",
                             NormalizedName = "MERCHANT"
                         },
                         new
                         {
                             Id = "ebef473b-b328-426b-b5b7-40008974384c",
-                            ConcurrencyStamp = "3f30da6f-d75f-4aa8-a389-ff999a82d8d2",
+                            ConcurrencyStamp = "e47025d4-4088-41a2-a0ed-8f613babd585",
                             Name = "Tenant",
                             NormalizedName = "TENANT"
                         },
                         new
                         {
                             Id = "9e229e60-a76b-4088-a262-bfa9d8e1a6cd",
-                            ConcurrencyStamp = "a7303827-59ab-44e8-9df4-da7f071f530b",
+                            ConcurrencyStamp = "594892c6-7219-4133-a3b5-9c65f2882d6d",
                             Name = "NewTenant",
                             NormalizedName = "NEWTENANT"
                         });
@@ -175,7 +175,7 @@ namespace LandingPage.API.Migrations
                         {
                             Id = "e9caf277-b4f7-48d9-a97f-c2533e6adbe3",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "bf134cbb-d3a2-416a-a49b-c707a98f334d",
+                            ConcurrencyStamp = "0c75e011-091b-42b5-be46-1b827205d389",
                             Email = "admin@admin.no",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -184,7 +184,7 @@ namespace LandingPage.API.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.NO",
                             NormalizedUserName = "ADMIN@ADMIN.NO",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJ1znqJd1H/ifNpsBSFPgbrEJVNiP8CZoJBnNDIua1kkMzMHgJ8ndv4tnJufqnFDbQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEmWgppdH/Qz88i5pd6xmkkrMfTCqyxaPzWYUklDHthcW+lZn6RropX1Bp9Shk41PA==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.no"
@@ -193,7 +193,7 @@ namespace LandingPage.API.Migrations
                         {
                             Id = "b575d83e-27e5-4f5e-8a3d-a607a5bdc0fb",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6389978c-b9a7-438b-85c4-98aaeb2fcad6",
+                            ConcurrencyStamp = "1b469786-18df-4605-bf7e-548fd36fbaff",
                             Email = "merchant@merchant.com",
                             EmailConfirmed = false,
                             FirstName = "Forhandler",
@@ -202,28 +202,256 @@ namespace LandingPage.API.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "MERCHANT@MERCHANT.COM",
                             NormalizedUserName = "MERCHANT@MERCHANT.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIDUFK1t1R1eTaUU0KsLgt4uni0rInvmgXGucgWG7S+Kab7eR+TjEDNa4dPbQkiZzg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEN9amndl9Y3N6I4Otp6ZMbrb5zxi9aJPR0DcY3jvrgrgnAME+tKEySKHUuNPvBBHXg==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "merchant@merchant.com"
                         },
                         new
                         {
-                            Id = "e20119f7-b5cb-43b3-8183-3f814334b160",
+                            Id = "10baaefa-d3f0-45a5-a348-ac991898e3fe",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "81cd48ce-f5bb-4e05-983e-bdc0ccbb7e5e",
-                            Email = "tenant@tenant.no",
+                            ConcurrencyStamp = "4eab71bb-7b22-4fb1-a693-2b136b960f53",
+                            Email = "kari@tenant.no",
                             EmailConfirmed = false,
-                            FirstName = "Tenant",
-                            IsActive = true,
-                            LastName = "Bruker",
+                            FirstName = "Kari",
+                            IsActive = false,
+                            LastName = "Nordmann",
                             LockoutEnabled = false,
-                            NormalizedEmail = "TENANT@TENANT.NO",
-                            NormalizedUserName = "TENANT@TENANT.NO",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMM/SQbJj5BmDv6VVRfFBDucG5oPbHMH2PzOknJtnKInBZTqlZ+73/ZFQN3zwR6ngA==",
+                            NormalizedEmail = "KARI@TENANT.NO",
+                            NormalizedUserName = "KARI@TENANT.NO",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMIVVwq9inpKvXMcKfkLoAOrvGKvoPvwhCc6S95l9dFbr5nh8voiiV+Ttmo2EZkw0A==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
-                            UserName = "tenant@tenant.no"
+                            UserName = "kari@tenant.no"
+                        },
+                        new
+                        {
+                            Id = "cdf19c52-c8f0-4207-a682-36bbc27930fd",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "5ec25aaa-11cf-423e-b585-1927ea63b764",
+                            Email = "ola@forhandler.no",
+                            EmailConfirmed = false,
+                            FirstName = "Ola",
+                            IsActive = true,
+                            LastName = "Nordmann",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "OLA@FORHANDLER.NO",
+                            NormalizedUserName = "OLA@FORHANDLER.NO",
+                            PasswordHash = "AQAAAAEAACcQAAAAEO5dtGast5ovbdT9wS6eNtoAsEiYD6/hLuM64W57TOBwKt5I/QrdnuPQGcU6eRskXQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "60855191-ab42-4930-964c-e50033193198",
+                            TwoFactorEnabled = false,
+                            UserName = "ola@forhandler.no"
+                        },
+                        new
+                        {
+                            Id = "0e3aef22-513f-4e24-90d8-c41beb1e8942",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "7753487c-06af-4a17-9944-3a2cd328ebe8",
+                            Email = "tenant2@tenant.no",
+                            EmailConfirmed = false,
+                            FirstName = "Tenant2",
+                            IsActive = false,
+                            LastName = "Bruker2",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "TENANT2@TENANT.NO",
+                            NormalizedUserName = "TENANT2@TENANT.NO",
+                            PasswordHash = "AQAAAAEAACcQAAAAECrMz3TC9HQagMxJaa+ApVcffcaNhUdJ1I9h6Xk4yr84ZCAtPdwZ8vRGKtyYbbxKpw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "356abc0a-28f3-44ac-8fa9-d6d9779e9c3f",
+                            TwoFactorEnabled = false,
+                            UserName = "tenant2@tenant.no"
+                        },
+                        new
+                        {
+                            Id = "9a48960c-57c6-4577-a926-5cd8e0e7478c",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "8dcf018b-35aa-458f-bc3c-42fa1e2639da",
+                            Email = "tenant3@tenant.no",
+                            EmailConfirmed = false,
+                            FirstName = "Tenant3",
+                            IsActive = true,
+                            LastName = "Bruker3",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "TENANT3@TENANT.NO",
+                            NormalizedUserName = "TENANT3@TENANT.NO",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIo5b012BefLNcoqP66PlPe6yQYa6taPwsH6Y4eROEdblXhC6nOg2fhQgLT3RFOTzA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "2f9dc137-0f0e-4ecb-8fc9-e7934bc18d1e",
+                            TwoFactorEnabled = false,
+                            UserName = "tenant3@tenant.no"
+                        },
+                        new
+                        {
+                            Id = "3f391255-44a0-49d6-803c-555296633ed1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "21d46d36-c741-4896-a6ec-92217b937a9a",
+                            Email = "tenant4@tenant.no",
+                            EmailConfirmed = false,
+                            FirstName = "Tenant4",
+                            IsActive = true,
+                            LastName = "Bruker4",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "TENANT4@TENANT.NO",
+                            NormalizedUserName = "TENANT4@TENANT.NO",
+                            PasswordHash = "AQAAAAEAACcQAAAAELbgJ7iLwRlPB25x3sguiqcSTzH0nkeyjtASklUf9fVcTFUe2p9FJYefOMlGLC22Rw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "0a256f91-7c17-49b1-9d50-fd332ea09be5",
+                            TwoFactorEnabled = false,
+                            UserName = "tenant4@tenant.no"
+                        },
+                        new
+                        {
+                            Id = "1273ff89-5875-4e1f-944c-dfc2223b06e9",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "6f35e961-5c74-441f-841c-c46001ff2cf0",
+                            Email = "tenant5@tenant.no",
+                            EmailConfirmed = false,
+                            FirstName = "Tenant5",
+                            IsActive = true,
+                            LastName = "Bruker5",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "TENANT5@TENANT.NO",
+                            NormalizedUserName = "TENANT5@TENANT.NO",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHJNhS1hABopDIcyuYuSVxUx9lz1/nFupJQIC+JL+Xt/wJlMNJ2wZC2SrPzBUn203Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "8ec2092b-8022-4edc-b8de-4b9c76ad47b1",
+                            TwoFactorEnabled = false,
+                            UserName = "tenant5@tenant.no"
+                        },
+                        new
+                        {
+                            Id = "2dd414a1-2be5-4896-ad64-d6012f06505d",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "68d306ab-e13d-4e94-bf71-b4270ffc9946",
+                            Email = "tenant6@tenant.no",
+                            EmailConfirmed = false,
+                            FirstName = "Tenant6",
+                            IsActive = true,
+                            LastName = "Bruker6",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "TENANT6@TENANT.NO",
+                            NormalizedUserName = "TENANT6@TENANT.NO",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPrqBmXHltwgOky/CnzUSMzKhe3pxwerjqyYwF7XTuvAS0aZrRQpA+53VcGfJoqSJQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "cfb1ff6f-1677-4e95-b038-7af2dba6f71e",
+                            TwoFactorEnabled = false,
+                            UserName = "tenant6@tenant.no"
+                        },
+                        new
+                        {
+                            Id = "20f6ed72-6071-4ca2-be2d-caff78a84edd",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "cbc4f11c-c961-484d-99c4-8cfb621e820c",
+                            Email = "tenant7@tenant.no",
+                            EmailConfirmed = false,
+                            FirstName = "Tenant7",
+                            IsActive = true,
+                            LastName = "Bruker7",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "TENANT7@TENANT.NO",
+                            NormalizedUserName = "TENANT7@TENANT.NO",
+                            PasswordHash = "AQAAAAEAACcQAAAAEF7ioi2mNnDL1uek8u2JoiTC7o14QnOWWHO43xR5PZKuxdmjw5y0wyFFXIbm1mgRBw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "ddaf48dd-74bb-4317-be0c-8cd1bec6ae61",
+                            TwoFactorEnabled = false,
+                            UserName = "tenant7@tenant.no"
+                        },
+                        new
+                        {
+                            Id = "cc3eafff-5099-405e-b73e-b8a2da435e7d",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "68b737b3-716e-4540-b6c4-31bd07e7d9c6",
+                            Email = "tenant8@tenant.no",
+                            EmailConfirmed = false,
+                            FirstName = "Tenant8",
+                            IsActive = true,
+                            LastName = "Bruker8",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "TENANT8@TENANT.NO",
+                            NormalizedUserName = "TENANT8@TENANT.NO",
+                            PasswordHash = "AQAAAAEAACcQAAAAENoUoQUYXOFuG1icMFfbww/+fQwwHAwAy6A9HdLONPxrKt0rzq0Ohph5uZCc6pb+5g==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "eb173e2e-4f68-4bdb-a26d-321e54e77c2c",
+                            TwoFactorEnabled = false,
+                            UserName = "tenant8@tenant.no"
+                        },
+                        new
+                        {
+                            Id = "ae4cf9c8-69fb-48fc-9845-e96402dc5647",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "e49b3a4c-14ae-4346-8376-032c8442b321",
+                            Email = "tenant9@tenant.no",
+                            EmailConfirmed = false,
+                            FirstName = "Tenant9",
+                            IsActive = true,
+                            LastName = "Bruker9",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "TENANT9@TENANT.NO",
+                            NormalizedUserName = "TENANT9@TENANT.NO",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGZrFFrCpfadS7/KNIykrTyYyLoo6c/Z8R41NvIVlTx8LJDykGqswYpxtW6DRdSKCw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "57da4253-ce54-4b55-a784-a4f94c5e0447",
+                            TwoFactorEnabled = false,
+                            UserName = "tenant9@tenant.no"
+                        },
+                        new
+                        {
+                            Id = "b99dd035-d9b7-4fe6-ac8c-bdbfb94224d1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "b7a00bcd-9524-4540-be54-eb17c2f70786",
+                            Email = "tenant10@tenant.no",
+                            EmailConfirmed = false,
+                            FirstName = "Tenant10",
+                            IsActive = true,
+                            LastName = "Bruker10",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "TENANT10@TENANT.NO",
+                            NormalizedUserName = "TENANT10@TENANT.NO",
+                            PasswordHash = "AQAAAAEAACcQAAAAEO0y64sYpk5lv55cmkWDve+yUdoGi7hjiwU79pF610oCgypizpLmcsEp4j0GUATrFw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "bf9103a8-57ef-4684-8aa8-25c7af4a4f00",
+                            TwoFactorEnabled = false,
+                            UserName = "tenant10@tenant.no"
+                        },
+                        new
+                        {
+                            Id = "becb3779-8931-4068-ac03-28ccf509db3d",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "2ef0a5a0-62b2-4c16-93b0-b2cd683ca8c3",
+                            Email = "tenant11@tenant.no",
+                            EmailConfirmed = false,
+                            FirstName = "Tenant11",
+                            IsActive = false,
+                            LastName = "Bruker11",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "TENANT11@TENANT.NO",
+                            NormalizedUserName = "TENANT11@TENANT.NO",
+                            PasswordHash = "AQAAAAEAACcQAAAAEF/ZezIuEyHGkf9f2pvJNR0qp9fLBVdK1e+M7ZTUyyjGu4rhgYLxry9wfIpJQH2eBg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "05900cca-74df-4f0f-b36f-806fe539568c",
+                            TwoFactorEnabled = false,
+                            UserName = "tenant11@tenant.no"
+                        },
+                        new
+                        {
+                            Id = "6c3ff3ae-f201-4189-a082-9e3bf7bb6e8b",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "eb9eb0db-f5fb-46f6-93a6-f2ccd5bfb6f1",
+                            Email = "tenant12@tenant.no",
+                            EmailConfirmed = false,
+                            FirstName = "Tenant12",
+                            IsActive = false,
+                            LastName = "Bruker12",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "TENANT12@TENANT.NO",
+                            NormalizedUserName = "TENANT12@TENANT.NO",
+                            PasswordHash = "AQAAAAEAACcQAAAAEA/0iQjHjU7gHMeAGj4n5JUMRnt43WfVVWFYJsapEAzaEgmTYaIQb0IP6jjJP2LvyA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "ded2a439-57fa-4b52-8a39-5e00962553fa",
+                            TwoFactorEnabled = false,
+                            UserName = "tenant12@tenant.no"
                         });
                 });
 
@@ -256,6 +484,71 @@ namespace LandingPage.API.Migrations
                         {
                             UserId = "e20119f7-b5cb-43b3-8183-3f814334b160",
                             RoleId = "ebef473b-b328-426b-b5b7-40008974384c"
+                        },
+                        new
+                        {
+                            UserId = "0e3aef22-513f-4e24-90d8-c41beb1e8942",
+                            RoleId = "ebef473b-b328-426b-b5b7-40008974384c"
+                        },
+                        new
+                        {
+                            UserId = "9a48960c-57c6-4577-a926-5cd8e0e7478c",
+                            RoleId = "ebef473b-b328-426b-b5b7-40008974384c"
+                        },
+                        new
+                        {
+                            UserId = "3f391255-44a0-49d6-803c-555296633ed1",
+                            RoleId = "ebef473b-b328-426b-b5b7-40008974384c"
+                        },
+                        new
+                        {
+                            UserId = "1273ff89-5875-4e1f-944c-dfc2223b06e9",
+                            RoleId = "ebef473b-b328-426b-b5b7-40008974384c"
+                        },
+                        new
+                        {
+                            UserId = "2dd414a1-2be5-4896-ad64-d6012f06505d",
+                            RoleId = "ebef473b-b328-426b-b5b7-40008974384c"
+                        },
+                        new
+                        {
+                            UserId = "20f6ed72-6071-4ca2-be2d-caff78a84edd",
+                            RoleId = "ebef473b-b328-426b-b5b7-40008974384c"
+                        },
+                        new
+                        {
+                            UserId = "cc3eafff-5099-405e-b73e-b8a2da435e7d",
+                            RoleId = "ebef473b-b328-426b-b5b7-40008974384c"
+                        },
+                        new
+                        {
+                            UserId = "ae4cf9c8-69fb-48fc-9845-e96402dc5647",
+                            RoleId = "ebef473b-b328-426b-b5b7-40008974384c"
+                        },
+                        new
+                        {
+                            UserId = "b99dd035-d9b7-4fe6-ac8c-bdbfb94224d1",
+                            RoleId = "ebef473b-b328-426b-b5b7-40008974384c"
+                        },
+                        new
+                        {
+                            UserId = "becb3779-8931-4068-ac03-28ccf509db3d",
+                            RoleId = "ebef473b-b328-426b-b5b7-40008974384c"
+                        },
+                        new
+                        {
+                            UserId = "6c3ff3ae-f201-4189-a082-9e3bf7bb6e8b",
+                            RoleId = "ebef473b-b328-426b-b5b7-40008974384c"
+                        },
+                        new
+                        {
+                            UserId = "10baaefa-d3f0-45a5-a348-ac991898e3fe",
+                            RoleId = "a5c6115c-a79d-444a-b92a-2f4496e2f175"
+                        },
+                        new
+                        {
+                            UserId = "cdf19c52-c8f0-4207-a682-36bbc27930fd",
+                            RoleId = "a5c6115c-a79d-444a-b92a-2f4496e2f175"
                         });
                 });
 
@@ -295,6 +588,48 @@ namespace LandingPage.API.Migrations
                         {
                             GroupId = 3,
                             GroupName = "Group3",
+                            IsActiveGroup = true
+                        },
+                        new
+                        {
+                            GroupId = 10,
+                            GroupName = "Group10",
+                            IsActiveGroup = false
+                        },
+                        new
+                        {
+                            GroupId = 11,
+                            GroupName = "Group11",
+                            IsActiveGroup = true
+                        },
+                        new
+                        {
+                            GroupId = 12,
+                            GroupName = "Group12",
+                            IsActiveGroup = true
+                        },
+                        new
+                        {
+                            GroupId = 13,
+                            GroupName = "Group13",
+                            IsActiveGroup = false
+                        },
+                        new
+                        {
+                            GroupId = 14,
+                            GroupName = "Group14",
+                            IsActiveGroup = true
+                        },
+                        new
+                        {
+                            GroupId = 15,
+                            GroupName = "Group15",
+                            IsActiveGroup = true
+                        },
+                        new
+                        {
+                            GroupId = 16,
+                            GroupName = "Group16",
                             IsActiveGroup = true
                         });
                 });
@@ -375,6 +710,48 @@ namespace LandingPage.API.Migrations
                             IsActive = true,
                             TenantName = "Tenant3",
                             Url = "tenant3url.no/activate"
+                        },
+                        new
+                        {
+                            TenantId = 8,
+                            IsActive = true,
+                            TenantName = "Tenant8",
+                            Url = "tenant8url.no/activate"
+                        },
+                        new
+                        {
+                            TenantId = 9,
+                            IsActive = true,
+                            TenantName = "Tenant9",
+                            Url = "tenant9url.no/activate"
+                        },
+                        new
+                        {
+                            TenantId = 10,
+                            IsActive = false,
+                            TenantName = "Tenant10",
+                            Url = "tenant10url.no/activate"
+                        },
+                        new
+                        {
+                            TenantId = 11,
+                            IsActive = false,
+                            TenantName = "Tenant11",
+                            Url = "tenant11url.no/activate"
+                        },
+                        new
+                        {
+                            TenantId = 12,
+                            IsActive = true,
+                            TenantName = "Tenant12",
+                            Url = "tenant12url.no/activate"
+                        },
+                        new
+                        {
+                            TenantId = 13,
+                            IsActive = true,
+                            TenantName = "Tenant13",
+                            Url = "tenant13url.no/activate"
                         });
                 });
 

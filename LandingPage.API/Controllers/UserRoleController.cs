@@ -2,6 +2,7 @@
 using LandingPage.API.Data;
 using LandingPage.API.Models.User;
 using LandingPage.API.Static;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ namespace LandingPage.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class UserRoleController : ControllerBase
     {
         private readonly RoleManager<ApplicationRole> _roleManager;

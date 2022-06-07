@@ -13,7 +13,7 @@ namespace LandingPage.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class UsersController : ControllerBase
     {
         private readonly AthenaPayLandingPageDbContext _context;
@@ -147,8 +147,14 @@ namespace LandingPage.API.Controllers
             {
                 var user = mapper.Map<ApplicationUser>(userDto); 
                 user.UserName = userDto.Email;
+                user.NormalizedEmail = userDto.Email.ToUpper();
                 user.SecurityStamp = Guid.NewGuid().ToString();
                 user.PasswordHash = hasher.HashPassword(null, userDto.Password);
+                var checkDuplicateEmail = _context.Users.Any(x => x.Email == userDto.Email);
+                if (checkDuplicateEmail)
+                {
+                    return StatusCode(500, "E-post er allerede i bruk");    
+                }
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
                 return CreatedAtAction("GetUser", new { id = user.Id }, user);
@@ -184,6 +190,9 @@ namespace LandingPage.API.Controllers
                 return StatusCode(500, Messages.Error500Message);
             }
         }
+
+        //[HttpGet("{id}")]
+        //[Route("get-current-user")]
 
         private bool UserExists(string id)
         {

@@ -2,7 +2,7 @@
 @inject IGroupService _groupService
 @inject IJSRuntime _jsRuntime
 
-
+<AuthorizeView Roles="Admin">
 <_DeleteConfirmation IsProcessing="IsLoading" IsConfirmed="ConfirmDelete"></_DeleteConfirmation>
 
 @if(response.Success == false)
@@ -15,10 +15,8 @@ else
 {  
     <div class="row mt-4 mx-4">
         <div class="mx-2">
-         <h3>Alle grupper</h3>
-            <a href="groups/create" class="btn btn-success">
-                <span class="oi oi-plus" aria-hidden="true"></span> Ny gruppe
-            </a>
+         <h3>Administrere grupper</h3>
+            
         </div>
         <div class="col-12 p-3 table-responsive-sm">
             @if (Groups == null)
@@ -39,7 +37,11 @@ else
                         <tr>
                             <th>Gruppenavn</th>
                             <th>Aktiv</th>
-                            <th> </th>
+                            <th> 
+                                <a href="groups/create" class="btn btn-success">
+                                <span class="oi oi-plus" aria-hidden="true"></span> Ny gruppe
+                                </a>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -63,6 +65,7 @@ else
             </div>
         </div>
 }
+</AuthorizeView>
 
 @code {
     private List<GroupReadOnlyDto> Groups;

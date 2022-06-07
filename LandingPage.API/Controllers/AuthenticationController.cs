@@ -122,6 +122,7 @@ namespace LandingPage.API.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-        
+
+
     }
 }

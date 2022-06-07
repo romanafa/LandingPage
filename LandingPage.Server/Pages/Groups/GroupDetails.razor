@@ -2,61 +2,62 @@
 @inject IGroupService _groupService
 @inject NavigationManager _navManager
 
-<div class="row my-2 mx-4">
-    <h3 class="card-title text-primary mb-3 ml-3">Gruppe</h3>
+@*<AuthorizeView Roles="Admin">*@
+    <div class="h-100 d-flex align-items-center justify-content-center">  
+        <div class="col-3">
+            <h3 class="card-title text-primary mb-3 ml-3">Gruppe informasjon</h3>
+            @if(IsLoading)
+            {
+                <div class="spinner"></div>
+            }
+            else
+            {
+                <EditForm Model="Group">
+                    <fieldset disabled>
+                        <div class="form-group">
+                            <label>Gruppenavn</label>
+                            <InputText @bind-Value="Group.GroupName" class="form-control"></InputText>
+                            <label class="form-check-label">Gruppe er aktiv</label>
+                            <input type="checkbox" disabled checked="@Group.IsActiveGroup">
+                        </div>
+                    </fieldset> 
+                    @if(Group.Tenants == null || Group.Tenants.Any() == false)
+                    {
 
-    <div class="col-3">
-        @if(IsLoading)
-        {
-            <div class="spinner"></div>
-        }
-        else
-        {
-            <EditForm Model="Group">
-                <fieldset disabled>
-                    <div class="form-group">
-                        <label>Gruppenavn</label>
-                        <InputText @bind-Value="Group.GroupName" class="form-control"></InputText>
-                        <label class="form-check-label">Gruppe er aktiv</label>
-                        <input type="checkbox" disabled checked="@Group.IsActiveGroup">
-                    </div>
-                </fieldset> 
-                @if(Group.Tenants == null || Group.Tenants.Any() == false)
-                {
-
-                     <p>Ingen tenants tildelt.</p>
-                }
-                else
-                {
-                    <div class="row">
-                        @foreach(var tenant in Group.Tenants)
-                        {
-                            <div class="col-3">
-                                <div class="card" style="width: 18rem;">
-                                  <div class="card-body">
-                                    <h5 class="card-title">@tenant.TenantName</h5>
-                                    <p class="card-text"></p>
-                                    @*<a href="/tenants/details/@tenant.TenantId" class="btn btn-primary">Vis tenant</a>*@
-                                  </div>
+                         <p>Ingen tenants tildelt.</p>
+                    }
+                    else
+                    {
+                        <div class="row">
+                            @foreach(var tenant in Group.Tenants)
+                            {
+                                <div class="col-3">
+                                    <div class="card" style="width: 18rem;">
+                                      <div class="card-body">
+                                        <h5 class="card-title">@tenant.TenantName</h5>
+                                        <p class="card-text"></p>
+                                        @*<a href="/tenants/details/@tenant.TenantId" class="btn btn-primary">Vis tenant</a>*@
+                                      </div>
+                                    </div>
                                 </div>
-                            </div>
-                        }
-                    </div>
-                }
-                <br/>
-                <button @onclick="GoToEdit" class="btn btn-primary">
-                    <i class="bi bi-pencil-square"></i>
-                    Rediger
-                </button>
+                            }
+                        </div>
+                    }
+                    <br/>
+                    <button @onclick="GoToEdit" class="btn btn-primary">
+                        <i class="bi bi-pencil-square"></i>
+                        Rediger
+                    </button>
 
-                <button @onclick="BackToList" class="btn btn-outline-secondary">
-                    Tilbake til alle grupper
-                </button>
-            </EditForm>
+                    <button @onclick="BackToList" class="btn btn-outline-secondary">
+                        Tilbake til alle grupper
+                    </button>
+                </EditForm>
 
-        }
+            }
+        </div>
     </div>
-</div>
+@*</AuthorizeView>*@
 
 @code {
     [Parameter]
