@@ -1,5 +1,75 @@
-﻿<h3>_AddGroup</h3>
+﻿@inject IGroupService _groupService
+@inject NavigationManager _navManager
+@inject IJSRuntime _jsRuntime
 
-@code {
+<div class="modal fade" data-backdrop="static" data-keyboard="false" id="addGroupModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog  modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ny bruker</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">🗙</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <EditForm Model="Group" OnValidSubmit="AddGroup">
+                <DataAnnotationsValidator/>
+                <div class="form-group">
+                    <label>Tenantnavn</label>
+                        <label>Gruppenavn</label>
+                        <InputText @bind-Value="Group.GroupName" class="form-control"></InputText>
+                        <ValidationMessage For="()=>Group.GroupName"></ValidationMessage>
+                        <label class="form-check-label">Sett gruppe som aktiv</label>
+                        <InputCheckbox @bind-Value="Group.IsActiveGroup" class="form-check-input"></InputCheckbox>
+                </div>
+                
+                @if (IsProcessing)
+                    {
+                        <div class="form-group py-2">
+                            
+                            <button type="button" class="btn btn-success" disabled">
+                                Lagrer...
+                            </button>
+                        </div>
+                    }
+                else
+                    {    
+                    <div class="form-group py-2">
+                        <button type="submit" class="btn btn-success">Lagre</button>
+                        </div>                 
+                    }
+                </EditForm>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+@code
+{
+    [Parameter]
+    public bool IsProcessing { get; set; }
+    private GroupCreateDto Group { get; set; } = new GroupCreateDto();
+
+    private async Task AddGroup()
+    {
+        var response = await _groupService.Create(Group);
+        if (response.Success)
+        {
+            CloseModal();
+            await _jsRuntime.SweetAlertSuccess("Ny gruppe ble lagt til.");
+        }
+        else
+        {
+            await _jsRuntime.SweetAlertError("Det oppsto en feil.");
+        }
+        
+    }
+
+    private void CloseModal()
+    {
+        _jsRuntime.InvokeVoidAsync("HideAddGroupModal");
+    }
 
 }
+
